@@ -1,53 +1,61 @@
-import React from "react";
-import BreadCrumb from "../../components/breadCrumb/breadCrumb";
-import Meta from "../../components/meta/meta";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { TextField, Button, Typography, Container, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    console.log("Logging in with", { email, password });
+    // Add login logic here
+  };
+
   return (
-    <>
-      <Meta title={"Login"} />
-      <BreadCrumb title="Login" />
-      <div className="login-wrapper py-5 home-wrapper-2">
-        <div className="row">
-          <div className="col-12">
-            <div className="auth-card">
-              <h3 className="text-center mb-3">Login</h3>
-              <form action="" className="d-flex flex-column gap-15">
-                <div>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    className="form-control"
-                  />
-                </div>
-                <div className="mt-1">
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    className="form-control"
-                  />
-                </div>
-                <div>
-                  <Link to="/forgot-password">Forgot Password?</Link>
-                  <div className="mt-3 d-flex justify-content-center gap-15 aligin-items-center">
-                    <button className="button border-0" type="submit">
-                      Login
-                    </button>
-                    <Link to="/signup" className="button signup">
-                      SignUp
-                    </Link>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+    <Container maxWidth="xs">
+      <Box mt={10} p={4} boxShadow={3} borderRadius={2}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Login
+        </Typography>
+        <TextField
+          label="Email"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <TextField
+          label="Password"
+          type="password"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={handleLogin}
+          sx={{ mt: 2 }}
+        >
+          Login
+        </Button>
+        <Typography
+          variant="body2"
+          align="center"
+          color="textSecondary"
+          sx={{ mt: 2 }}
+        >
+          Don’t have an account?&nbsp;
+          <Button variant="text" onClick={() => navigate("/register")}>Register</Button>
+        </Typography>
+      </Box>
+    </Container>
   );
 };
 
-export default Login;
+export default LoginPage;
