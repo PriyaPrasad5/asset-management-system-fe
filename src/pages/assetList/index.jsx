@@ -13,19 +13,139 @@ import {
   Thead,
   Tr,
   useToast,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { fetchAssets } from "../../services/admin";
+import { fetchAssets, updateAsset, deleteAsset, filter } from "../../services/admin";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const AssetList = () => {
   const toast = useToast();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure(); // For modal visibility
+  const [selectedAsset, setSelectedAsset] = useState(null);
+  const [searchDate, setSearchDate] = useState("");
 
+  // Fetch assets using useQuery
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["assets"],
     queryFn: fetchAssets,
   });
+
+  const { mutate: deleteAssetMutation, isLoading: deleteLoading } = useMutation({
+    mutationFn: (assetId) => deleteAsset(assetId), // Pass `assetId` explicitly
+    onSuccess: () => {
+      queryClient.invalidateQueries(["assets"]);
+      toast({
+        title: "Asset Deleted",
+        description: "The asset has been deleted successfully.",
+        status: "success",
+      });
+      navigate("/asset-list");
+    },
+    onError: (err) => {
+      toast({
+        title: "Error deleting asset",
+        description: err?.message || "An error occurred",
+        status: "error",
+      });
+    },
+  });
+  
+  const mutUpdateAsset = useMutation({
+    mutationFn: updateAsset,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["assets"]);
+      toast({
+        title: "Asset Updated",
+        description: "The asset has been updated successfully.",
+        status: "success",
+      });
+      onClose(); 
+      navigate("/asset-list");
+    },
+    onError: (err) => {
+      toast({
+        title: "Error updating asset",
+        description: err?.message || "An error occurred",
+        status: "error",
+      });
+    },
+  });
+  
+
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm();
+
+  // Handle edit (opens modal and sets selected asset)
+  const handleEdit = (asset) => {
+    setSelectedAsset(asset);
+    setValue("status", asset.status);
+    setValue("warrantyEndDate", asset.warrantyEndDate);
+    setValue("nextServiceDate", asset.nextServiceDate);
+    onOpen();
+  };
+
+  // Handle delete
+  const handleDelete = (assetId) => {
+    deleteAssetMutation(assetId);
+  };
+
+  // Handle form submission in modal
+  const onSubmit = (data) => {
+    if (!data.status || !data.warrantyEndDate || !data.nextServiceDate) {
+      toast({
+        title: "Validation Error",
+        description: "All fields are required.",
+        status: "error",
+        // duration: 5000,
+        // isClosable: true,
+      });
+      return;
+    }
+    mutUpdateAsset.mutate({
+      id: selectedAsset.id,
+      ...data,
+    });
+  };
+
+  // Handle search for warranty date
+  const handleSearch = async () => {
+    if (!searchDate) {
+      toast({
+        title: "Validation Error",
+        description: "Please enter a valid date.",
+        status: "error",
+      });
+      return;
+    }
+
+    try {
+      const response = await filter(searchDate); 
+      queryClient.setQueryData(["assets"], { data: response.data });
+    } catch (err) {
+      toast({
+        title: "Error searching assets",
+        description: err?.message || "An error occurred while searching",
+        status: "error",
+      });
+    }
+  };
 
   if (isError) {
     console.error("Error fetching assets:", error);
@@ -33,8 +153,8 @@ const AssetList = () => {
       title: "Error loading assets",
       description: error.message,
       status: "error",
-      duration: 5000,
-      isClosable: true,
+      // duration: 5000,
+      // isClosable: true,
     });
   }
 
@@ -49,10 +169,23 @@ const AssetList = () => {
   const assets = data?.data || [];
 
   return (
-    <Box maxW="1000px" mx="auto" p={4}>
+    <Box maxW="none" mx="auto" p={4}>
       <Text fontSize="2xl" fontWeight="bold" mb={4}>
         Asset List
       </Text>
+      {/* Search Input */}
+      <Box mb={4} display="flex" alignItems="center">
+        <Input
+          type="date"
+          value={searchDate}
+          onChange={(e) => setSearchDate(e.target.value)}
+          placeholder="Search by Warranty Date"
+          mr={2}
+        />
+        <Button colorScheme="blue" onClick={handleSearch}>
+          Search
+        </Button>
+      </Box>
       <TableContainer border="1px solid #e2e8f0" borderRadius="md">
         <Table variant="simple">
           <Thead bg="gray.100">
@@ -89,7 +222,7 @@ const AssetList = () => {
                     icon={<FaEdit />}
                     colorScheme="blue"
                     size="sm"
-                    // onClick={() => handleEdit(asset)}
+                    onClick={() => handleEdit(asset)}
                     mr={2}
                   />
                   <IconButton
@@ -97,7 +230,8 @@ const AssetList = () => {
                     icon={<FaTrash />}
                     colorScheme="red"
                     size="sm"
-                    // onClick={() => handleDelete(asset)}
+                    onClick={() => handleDelete(asset.id)}
+                    isLoading={deleteLoading}
                   />
                 </Td>
               </Tr>
@@ -105,6 +239,60 @@ const AssetList = () => {
           </Tbody>
         </Table>
       </TableContainer>
+
+      {/* Modal for editing asset */}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Edit Asset</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <FormControl isRequired>
+              <FormLabel>Status</FormLabel>
+              <Select
+                {...register("status")}
+              >
+                <option value="AVAILABLE">Available</option>
+                <option value="UNDER_MAINTENANCE">Under Maintenance</option>
+                <option value="ASSIGNED">Assigned</option>
+              </Select>
+              {errors.status && <Text color="red.500">This field is required</Text>}
+            </FormControl>
+
+            <FormControl isRequired mt={4}>
+              <FormLabel>Warranty End Date</FormLabel>
+              <Input
+                type="date"
+                {...register("warrantyEndDate")}
+              />
+              {errors.warrantyEndDate && <Text color="red.500">This field is required</Text>}
+            </FormControl>
+
+            <FormControl isRequired mt={4}>
+              <FormLabel>Next Service Date</FormLabel>
+              <Input
+                type="date"
+                {...register("nextServiceDate")}
+              />
+              {errors.nextServiceDate && <Text color="red.500">This field is required</Text>}
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={handleSubmit(onSubmit)}
+              isLoading={mutUpdateAsset.isLoading}
+            >
+              Update
+            </Button>
+            <Button variant="ghost" onClick={onClose}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

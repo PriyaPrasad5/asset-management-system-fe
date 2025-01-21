@@ -1,13 +1,8 @@
 import { Box, Button, Center, Image, Stack } from "@chakra-ui/react";
 import React from "react";
 import { Helmet } from "react-helmet";
-import {
-  FaCar,
-  FaChartPie,
-  FaChartSimple,
-  FaDoorOpen,
-  FaShop,
-} from "react-icons/fa6";
+import { FaListAlt, FaPlusCircle } from "react-icons/fa";
+import { FaChartPie, FaDoorOpen } from "react-icons/fa6";
 import { Outlet, useNavigate } from "react-router";
 
 const MainLayout = () => {
@@ -55,25 +50,22 @@ const SideMenuList = () => {
 
   const menuItems = {
     ADMIN: [
-      { label: "Create Asset", icon: <FaChartPie />, path: "create-asset" },
-      { label: "Get Asset", icon: <FaShop />, path: "asset-list" },
-      // { label: "Update Asset", icon: <FaCar />, path: "vehicles" },
-      // { label: "Get Asset By Id", icon: <FaUser />, path: "manage-users" },
-      // { label: "Delete Asset", icon: <FaChartSimple />, path: "reports" },
-      { label: "Update Asset", icon: <FaChartSimple />, path: "update-asset" },
-      { label: "Dashboard", icon: <FaChartPie />, path: "dashboard" },
+      { label: "Create Asset", icon: <FaPlusCircle />, path: "create-asset" },
+      { label: "Get Asset", icon: <FaListAlt />, path: "asset-list" },
+      { label: "Dashboard", icon: <FaChartPie />, path: "asset-dashboard" },
     ],
     EMPLOYEE: [
-      { label: "Create Request", icon: <FaChartPie />, path: "create-request" },
-      { label: "Dashboard", icon: <FaShop />, path: "employee-dashboard" },
+      {
+        label: "Create Request",
+        icon: <FaPlusCircle />,
+        path: "create-request",
+      },
+      { label: "Dashboard", icon: <FaChartPie />, path: "employee-dashboard" },
     ],
     MANAGER: [
-      { label: "Get Asset", icon: <FaChartPie />, path: "asset-list" },
-      { label: "Get Requests", icon: <FaCar />, path: "request-list" },
-      { label: "Approve Requests", icon: <FaCar />, path: "approve-request" },
-      { label: "Reject Requests", icon: <FaCar />, path: "reject-request" },
-      // { label: "Update Asset", icon: <FaChartSimple />, path: "update-asset" },
-      { label: "Dashboard", icon: <FaChartSimple />, path: "dashboard" },
+      { label: "Get Asset", icon: <FaListAlt />, path: "assets" },
+      { label: "Get Requests", icon: <FaListAlt />, path: "request-list" },
+      // { label: "Dashboard", icon: <FaChartPie />, path: "dashboard" },
     ],
   };
 

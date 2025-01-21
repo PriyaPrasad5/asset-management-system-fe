@@ -6,6 +6,11 @@ import AssetList from "../pages/assetList";
 import AddAssetForm from "../pages/createAsset";
 import LoginPage from "../pages/login";
 import RegisterPage from "../pages/register";
+import Dashboard from "../pages/adminDashboard";
+import AddRequestForm from "../pages/employee";
+import RequestEmployeeList from "../pages/employeeDashoard";
+import RequestList from "../pages/requestList";
+import ManagerAssetList from "../pages/managerAssetList";
 
 const Router = () => {
   return (
@@ -18,6 +23,11 @@ const Router = () => {
       <Route path="/app" element={<MainLayout />}>
         <Route path="create-asset" element={<AddAssetForm />} />
         <Route path="asset-list" element={<AssetList />} />
+        <Route path="asset-dashboard" element={<Dashboard />} />
+        <Route path="create-request" element={<AddRequestForm />} />
+        <Route path="employee-dashboard" element={<RequestEmployeeList />} />
+        <Route path="request-list" element={<RequestList />} />
+        <Route path="assets" element={<ManagerAssetList />} />
       </Route>
     </Routes>
   );

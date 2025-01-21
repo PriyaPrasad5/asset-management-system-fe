@@ -64,16 +64,16 @@ const RegisterPage = () => {
   return (
     <Box w="100%" maxW="400px" minH="100vh" mx="auto" bg="var(--tgsb)">
       <Center
-        bg="#fff"
-        color="white"
-        textAlign="center"
-        p="2"
-        fontWeight={"bold"}
-        mb="5px"
+        textAlign={"center"}
+        fontWeight={"800"}
+        textTransform={"uppercase"}
+        p="3"
+        borderRadius={"8px"}
+        fontSize={"1.25rem"}
+        color={"GrayText"}
       >
-        <Box fontSize={"1.1rem"}>Register</Box>
+        <Box ml="2">REGISTER</Box>
       </Center>
-
       <Stack p="4" w="100%">
         <Stack
           w="100%"
