@@ -8,7 +8,7 @@ const resp = {
 
 export async function fetchAssets() {
   try {
-    const response = await managerApiClient.get("asset/list");
+    const response = await managerApiClient.get("assets");
     return await response.data;
   } catch (error) {
     return resp;

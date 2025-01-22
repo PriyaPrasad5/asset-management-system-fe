@@ -57,7 +57,7 @@ const AssetList = () => {
         description: "The asset has been deleted successfully.",
         status: "success",
       });
-      navigate("/asset-list");
+      navigate("/app/asset-list");
     },
     onError: (err) => {
       toast({
@@ -78,7 +78,7 @@ const AssetList = () => {
         status: "success",
       });
       onClose(); 
-      navigate("/asset-list");
+      navigate("/app/asset-list");
     },
     onError: (err) => {
       toast({
@@ -192,11 +192,13 @@ const AssetList = () => {
             <Tr>
               <Th>#</Th>
               <Th>Asset ID</Th>
+              <Th>Asset Identifier</Th>
               <Th>Name</Th>
               <Th>Type</Th>
               <Th>Status</Th>
               <Th>Purchase Date</Th>
               <Th>Warranty End Date</Th>
+              <Th>User Id</Th>
               <Th>Actions</Th>
             </Tr>
           </Thead>
@@ -204,7 +206,8 @@ const AssetList = () => {
             {assets.map((asset, index) => (
               <Tr key={asset.id}>
                 <Td>{index + 1}</Td>
-                <Td>{asset.assetId}</Td>
+                <Td>{asset.id}</Td>
+                <Td>{asset.assetIdentifier}</Td>
                 <Td>{asset.name}</Td>
                 <Td>{asset.type}</Td>
                 <Td>
@@ -216,6 +219,7 @@ const AssetList = () => {
                 </Td>
                 <Td>{new Date(asset.purchaseDate).toLocaleDateString()}</Td>
                 <Td>{new Date(asset.warrantyEndDate).toLocaleDateString()}</Td>
+                <Td>{asset.userId}</Td>
                 <Td>
                   <IconButton
                     aria-label="Edit Asset"

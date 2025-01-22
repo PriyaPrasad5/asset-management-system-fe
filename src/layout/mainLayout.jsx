@@ -64,7 +64,7 @@ const SideMenuList = () => {
     ],
     MANAGER: [
       { label: "Get Asset", icon: <FaListAlt />, path: "assets" },
-      { label: "Get Requests", icon: <FaListAlt />, path: "request-list" },
+      { label: "Get Requests", icon: <FaChartPie />, path: "request-list" },
       // { label: "Dashboard", icon: <FaChartPie />, path: "dashboard" },
     ],
   };
@@ -87,7 +87,7 @@ const SideMenuList = () => {
         fontSize={"1.8rem"}
         borderTopRadius={"10px"}
       >
-        <Image src="/logo.png" h={"60px"} />
+        <Image src="/ams.png" h={"60px"} w={"60px"}/>
       </Center>
       <Stack p="3" mt="3" spacing={3}>
         {menuItems[role]?.map((item) => (

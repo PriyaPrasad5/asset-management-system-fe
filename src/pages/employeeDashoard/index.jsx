@@ -40,7 +40,7 @@ const RequestEmployeeList = () => {
           description: "The request has been deleted successfully.",
           status: "success",
         });
-        navigate("/employee-dashboard");
+        navigate("/app/employee-dashboard");
       },
       onError: (err) => {
         toast({

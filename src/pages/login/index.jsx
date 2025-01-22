@@ -5,6 +5,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Image,
   Input,
   Stack,
   Text,
@@ -77,7 +78,7 @@ const LoginPage = () => {
         fontSize={"1.1rem"}
         mb="5px"
       >
-        {/* <Image src="/logo.png" w="140px" /> */}
+        {/* <Image src="/ams.png" w="140px" h="140px" /> */}
       </Center>
       <Stack p="4" w="100%">
         <Center

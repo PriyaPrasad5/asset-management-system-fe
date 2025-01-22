@@ -38,7 +38,7 @@ const AddRequestForm = () => {
   useEffect(() => {
     if (mutAddRequest.isSuccess) {
       toast({ title: "Request created successfully!", status: "success" });
-      navigate("/employee-dashboard");
+      navigate("/app/employee-dashboard");
     }
 
     if (mutAddRequest.isError) {

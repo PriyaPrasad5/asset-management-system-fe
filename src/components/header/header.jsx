@@ -14,7 +14,7 @@ const Header = ({ text, disptext }) => {
         fontSize={"1.1rem"}
         mb="5px"
       >
-        <Image src="/logo.png" w="140px" />
+        <Image src="/ams.png" w="140px" />
       </Center>
       {text && disptext && (
         <Box

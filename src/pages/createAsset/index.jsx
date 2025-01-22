@@ -26,7 +26,7 @@ const AddAssetForm = () => {
     defaultValues: {
       name: "",
       type: "",
-      assetId: "",
+      assetIdentifier: "",
       purchaseDate: "",
       warrantyEndDate: "",
     },
@@ -40,7 +40,7 @@ const AddAssetForm = () => {
   useEffect(() => {
     if (mutAddAsset.isSuccess) {
       toast({ title: "Asset added successfully!", status: "success" });
-      navigate("/assets");
+      navigate("/app/asset-list");
     }
 
     if (mutAddAsset.isError) {
@@ -100,19 +100,19 @@ const AddAssetForm = () => {
           </FormErrorMessage>
         </FormControl>
 
-        <FormControl isInvalid={errors.assetId}>
-          <FormLabel>Asset ID</FormLabel>
+        <FormControl isInvalid={errors.assetIdentifier}>
+          <FormLabel>Asset Identifier</FormLabel>
           <Input
-            {...register("assetId", {
-              required: "Asset ID is required",
-              pattern: {
-                value: /^[0-9]+$/,
-                message: "Asset ID must be a number",
-              },
+            {...register("assetIdentifier", {
+              required: "Asset Identifier is required",
+              // pattern: {
+              //   value: /^[0-9]+$/,
+              //   message: "Asset ID must be a number",
+              // },
             })}
           />
           <FormErrorMessage>
-            {errors.assetId && errors.assetId.message}
+            {errors.assetIdentifier && errors.assetIdentifier.message}
           </FormErrorMessage>
         </FormControl>
 
