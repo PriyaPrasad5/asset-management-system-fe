@@ -11,6 +11,8 @@ import AddRequestForm from "../pages/employee";
 import RequestEmployeeList from "../pages/employeeDashoard";
 import RequestList from "../pages/requestList";
 import ManagerAssetList from "../pages/managerAssetList";
+import UserList from "../pages/userList";
+import UserDetails from "../pages/userView";
 
 const Router = () => {
   return (
@@ -28,6 +30,8 @@ const Router = () => {
         <Route path="employee-dashboard" element={<RequestEmployeeList />} />
         <Route path="request-list" element={<RequestList />} />
         <Route path="assets" element={<ManagerAssetList />} />
+        <Route path="user-list" element={<UserList />} />
+        <Route path="user-details/:userId" element={<UserDetails />} />
       </Route>
     </Routes>
   );

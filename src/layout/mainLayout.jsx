@@ -51,7 +51,8 @@ const SideMenuList = () => {
   const menuItems = {
     ADMIN: [
       { label: "Create Asset", icon: <FaPlusCircle />, path: "create-asset" },
-      { label: "Get Asset", icon: <FaListAlt />, path: "asset-list" },
+      { label: "Asset List", icon: <FaListAlt />, path: "asset-list" },
+      { label: "User List", icon: <FaListAlt />, path: "user-list" },
       { label: "Dashboard", icon: <FaChartPie />, path: "asset-dashboard" },
     ],
     EMPLOYEE: [
@@ -63,8 +64,8 @@ const SideMenuList = () => {
       { label: "Dashboard", icon: <FaChartPie />, path: "employee-dashboard" },
     ],
     MANAGER: [
-      { label: "Get Asset", icon: <FaListAlt />, path: "assets" },
-      { label: "Get Requests", icon: <FaChartPie />, path: "request-list" },
+      { label: "Asset List", icon: <FaListAlt />, path: "assets" },
+      { label: "Requests List", icon: <FaChartPie />, path: "request-list" },
       // { label: "Dashboard", icon: <FaChartPie />, path: "dashboard" },
     ],
   };

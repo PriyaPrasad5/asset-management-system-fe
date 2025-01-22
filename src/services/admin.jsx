@@ -63,3 +63,21 @@ export async function fetchAssetStats() {
     return resp;
   }
 }
+
+export async function fetchUsers() {
+  try {
+    const response = await adminApiClient.get("/users");
+    return await response.data;
+  } catch (error) {
+    return resp;
+  }
+}
+
+export async function fetchUserDetails(userId) {
+  try {
+    const response = await adminApiClient.get(`/user/history/${userId}`);
+    return await response.data;
+  } catch (error) {
+    return resp;
+  }
+}
