@@ -145,6 +145,9 @@ const RegisterPage = () => {
                   value: 8,
                   message: "Password must be at least 8 characters long",
                 },
+                validate: (value) =>
+                  /[A-Z]/.test(value) ||
+                  "Password must contain at least one uppercase letter",
               })}
             />
             <FormErrorMessage>
