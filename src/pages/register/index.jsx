@@ -180,6 +180,17 @@ const RegisterPage = () => {
               Register
             </Button>
           </Box>
+          {/* Added Login Link */}
+          <Text fontSize="sm" color="gray.600" textAlign="center" mt="4">
+            Login &nbsp;
+            <Button
+              variant="link"
+              colorScheme="blue"
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </Button>
+          </Text>
         </Stack>
       </Stack>
     </Box>
