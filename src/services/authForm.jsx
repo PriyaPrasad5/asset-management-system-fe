@@ -11,7 +11,11 @@ export async function userRegister(bData) {
     const response = await authApiClient.post("register", bData);
     return await response.data;
   } catch (error) {
-    return resp;
+    return {
+      ...resp,
+      message: error?.response?.data?.exception?.error?.message || resp.message,
+      result: error?.response?.data || {},
+    };
   }
 }
 

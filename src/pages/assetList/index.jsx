@@ -30,7 +30,12 @@ import {
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState, useEffect } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { fetchAssets, updateAsset, deleteAsset, filter } from "../../services/admin";
+import {
+  fetchAssets,
+  updateAsset,
+  deleteAsset,
+  filter,
+} from "../../services/admin";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -48,26 +53,28 @@ const AssetList = () => {
     queryFn: fetchAssets,
   });
 
-  const { mutate: deleteAssetMutation, isLoading: deleteLoading } = useMutation({
-    mutationFn: (assetId) => deleteAsset(assetId), // Pass `assetId` explicitly
-    onSuccess: () => {
-      queryClient.invalidateQueries(["assets"]);
-      toast({
-        title: "Asset Deleted",
-        description: "The asset has been deleted successfully.",
-        status: "success",
-      });
-      navigate("/app/asset-list");
-    },
-    onError: (err) => {
-      toast({
-        title: "Error deleting asset",
-        description: err?.message || "An error occurred",
-        status: "error",
-      });
-    },
-  });
-  
+  const { mutate: deleteAssetMutation, isLoading: deleteLoading } = useMutation(
+    {
+      mutationFn: (assetId) => deleteAsset(assetId), // Pass `assetId` explicitly
+      onSuccess: () => {
+        queryClient.invalidateQueries(["assets"]);
+        toast({
+          title: "Asset Deleted",
+          description: "The asset has been deleted successfully.",
+          status: "success",
+        });
+        navigate("/app/asset-list");
+      },
+      onError: (err) => {
+        toast({
+          title: "Error deleting asset",
+          description: err?.message || "An error occurred",
+          status: "error",
+        });
+      },
+    }
+  );
+
   const mutUpdateAsset = useMutation({
     mutationFn: updateAsset,
     onSuccess: () => {
@@ -77,7 +84,7 @@ const AssetList = () => {
         description: "The asset has been updated successfully.",
         status: "success",
       });
-      onClose(); 
+      onClose();
       navigate("/app/asset-list");
     },
     onError: (err) => {
@@ -88,9 +95,13 @@ const AssetList = () => {
       });
     },
   });
-  
 
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm();
 
   // Handle edit (opens modal and sets selected asset)
   const handleEdit = (asset) => {
@@ -101,8 +112,17 @@ const AssetList = () => {
     onOpen();
   };
 
-  // Handle delete
-  const handleDelete = (assetId) => {
+  const handleDelete = (assetId, assetStatus) => {
+    if (assetStatus === "ASSIGNED") {
+      toast({
+        title: "Cannot Delete Asset",
+        description: "The asset is assigned and cannot be deleted.",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
     deleteAssetMutation(assetId);
   };
 
@@ -136,7 +156,7 @@ const AssetList = () => {
     }
 
     try {
-      const response = await filter(searchDate); 
+      const response = await filter(searchDate);
       queryClient.setQueryData(["assets"], { data: response.data });
     } catch (err) {
       toast({
@@ -234,8 +254,9 @@ const AssetList = () => {
                     icon={<FaTrash />}
                     colorScheme="red"
                     size="sm"
-                    onClick={() => handleDelete(asset.id)}
+                    onClick={() => handleDelete(asset.id, asset.status)}
                     isLoading={deleteLoading}
+                    isDisabled={asset.status === "ASSIGNED"} // Disable the button if status is ASSIGNED
                   />
                 </Td>
               </Tr>
@@ -253,32 +274,30 @@ const AssetList = () => {
           <ModalBody>
             <FormControl isRequired>
               <FormLabel>Status</FormLabel>
-              <Select
-                {...register("status")}
-              >
+              <Select {...register("status")}>
                 <option value="AVAILABLE">Available</option>
                 <option value="UNDER_MAINTENANCE">Under Maintenance</option>
                 <option value="ASSIGNED">Assigned</option>
               </Select>
-              {errors.status && <Text color="red.500">This field is required</Text>}
+              {errors.status && (
+                <Text color="red.500">This field is required</Text>
+              )}
             </FormControl>
 
             <FormControl isRequired mt={4}>
               <FormLabel>Warranty End Date</FormLabel>
-              <Input
-                type="date"
-                {...register("warrantyEndDate")}
-              />
-              {errors.warrantyEndDate && <Text color="red.500">This field is required</Text>}
+              <Input type="date" {...register("warrantyEndDate")} />
+              {errors.warrantyEndDate && (
+                <Text color="red.500">This field is required</Text>
+              )}
             </FormControl>
 
             <FormControl isRequired mt={4}>
               <FormLabel>Next Service Date</FormLabel>
-              <Input
-                type="date"
-                {...register("nextServiceDate")}
-              />
-              {errors.nextServiceDate && <Text color="red.500">This field is required</Text>}
+              <Input type="date" {...register("nextServiceDate")} />
+              {errors.nextServiceDate && (
+                <Text color="red.500">This field is required</Text>
+              )}
             </FormControl>
           </ModalBody>
 

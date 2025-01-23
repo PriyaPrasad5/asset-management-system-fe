@@ -10,7 +10,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FaRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
@@ -33,33 +32,47 @@ const RegisterPage = () => {
     },
   });
 
-  const mutRegistration = useMutation({ mutationFn: userRegister });
+  // const mutRegistration = useMutation({ mutationFn: userRegister });
 
-  const onSubmit = (data) => {
-    mutRegistration.mutate(data);
-  };
+  const mutRegistration = useMutation({
+    mutationFn: userRegister,
+    onSuccess: (data) => {
+      if (data?.status === "success") {
+        toast({
+          title: "Registration Successful!",
+          status: "success",
+        });
+        navigate("/login"); // Redirect to login page
+      } else {
+        const errMessage = data?.message || "An unexpected error occurred!";
+        console.error("Error in Response:", data);
 
-  useEffect(() => {
-    if (mutRegistration.isSuccess) {
-      // Handle success response after mutation is successful
-      toast({ title: "Registration Successful!", status: "success" });
-      navigate("/login"); // Redirect to login page
-    } else if (mutRegistration.isError) {
-      // Handle error response if mutation fails
-      const errMessage = mutRegistration.error?.message || "An error occurred!";
+        toast({
+          title: "Registration Failed!",
+          description: errMessage,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    },
+    onError: (err) => {
+      console.error("Mutation Error Object:", err);
+
+      const errMessage = err?.message || "An unexpected error occurred!";
       toast({
         title: "Registration Failed!",
         description: errMessage,
         status: "error",
+        duration: 5000,
+        isClosable: true,
       });
-    }
-  }, [
-    mutRegistration.isSuccess,
-    mutRegistration.isError,
-    mutRegistration.error,
-    navigate,
-    toast,
-  ]);
+    },
+  });
+
+  const onSubmit = (data) => {
+    mutRegistration.mutate(data);
+  };
 
   return (
     <Box w="100%" maxW="400px" minH="100vh" mx="auto" bg="var(--tgsb)">
