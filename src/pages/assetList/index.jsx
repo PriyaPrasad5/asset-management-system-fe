@@ -1,8 +1,20 @@
 import {
   Badge,
   Box,
+  Button,
   Center,
+  FormControl,
+  FormLabel,
   IconButton,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Select,
   Spinner,
   Table,
   TableContainer,
@@ -11,33 +23,22 @@ import {
   Text,
   Th,
   Thead,
+  Tooltip,
   Tr,
-  useToast,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  Select,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useState, useEffect } from "react";
-import { FaEdit, FaTrash } from "react-icons/fa";
-import {
-  fetchAssets,
-  updateAsset,
-  deleteAsset,
-  filter,
-} from "../../services/admin";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import {
+  deleteAsset,
+  fetchAssets,
+  filter,
+  updateAsset,
+} from "../../services/admin";
 
 const AssetList = () => {
   const toast = useToast();
@@ -241,23 +242,42 @@ const AssetList = () => {
                 <Td>{new Date(asset.warrantyEndDate).toLocaleDateString()}</Td>
                 <Td>{asset.userId}</Td>
                 <Td>
-                  <IconButton
-                    aria-label="Edit Asset"
-                    icon={<FaEdit />}
-                    colorScheme="blue"
-                    size="sm"
-                    onClick={() => handleEdit(asset)}
-                    mr={2}
-                  />
-                  <IconButton
-                    aria-label="Delete Asset"
-                    icon={<FaTrash />}
-                    colorScheme="red"
-                    size="sm"
-                    onClick={() => handleDelete(asset.id, asset.status)}
-                    isLoading={deleteLoading}
-                    isDisabled={asset.status === "ASSIGNED"} // Disable the button if status is ASSIGNED
-                  />
+                  <Tooltip
+                    label={
+                      asset.status === "ASSIGNED"
+                        ? "Cannot edit assigned assets"
+                        : ""
+                    }
+                    shouldWrapChildren
+                  >
+                    <IconButton
+                      aria-label="Edit Asset"
+                      icon={<FaEdit />}
+                      colorScheme="blue"
+                      size="sm"
+                      onClick={() => handleEdit(asset)}
+                      mr={2}
+                      isDisabled={asset.status === "ASSIGNED"}
+                    />
+                  </Tooltip>
+                  <Tooltip
+                    label={
+                      asset.status === "ASSIGNED"
+                        ? "Cannot delete assigned assets"
+                        : ""
+                    }
+                    shouldWrapChildren
+                  >
+                    <IconButton
+                      aria-label="Delete Asset"
+                      icon={<FaTrash />}
+                      colorScheme="red"
+                      size="sm"
+                      onClick={() => handleDelete(asset.id, asset.status)}
+                      isLoading={deleteLoading}
+                      isDisabled={asset.status === "ASSIGNED"} // Disable the button if status is ASSIGNED
+                    />
+                  </Tooltip>
                 </Td>
               </Tr>
             ))}
