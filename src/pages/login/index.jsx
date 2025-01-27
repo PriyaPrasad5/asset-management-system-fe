@@ -82,6 +82,7 @@ const LoginPage = () => {
       </Center>
       <Stack p="4" w="100%">
         <Center
+          data-testid="login-container"
           textAlign={"center"}
           fontWeight={"800"}
           textTransform={"uppercase"}
@@ -91,7 +92,7 @@ const LoginPage = () => {
           color={"GrayText"}
         >
           <FaChartSimple />
-          <Box ml="2"> LOGIN</Box>
+          <Box ml="2">LOGIN</Box>
         </Center>
         <Stack
           w="100%"
@@ -148,7 +149,7 @@ const LoginPage = () => {
               Login
             </Button>
           </Box>
-          {/* Added Register Link */}
+          {/* Added register Link */}
           <Text fontSize="sm" color="gray.600" textAlign="center" mt="4">
             Don’t have an account?&nbsp;
             <Button

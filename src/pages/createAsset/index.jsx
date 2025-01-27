@@ -67,6 +67,7 @@ const AddAssetForm = () => {
       bg="gray.50"
       borderRadius="md"
       boxShadow="md"
+      mt="9"
     >
       <Center mb="6" fontWeight="bold" fontSize="lg">
         Add New Asset

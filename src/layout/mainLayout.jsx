@@ -25,6 +25,7 @@ const MainLayout = () => {
         </Box>
         <Box w="100%" flex={1}>
           <Box
+            data-testid="header"
             bg="var(--tgsh)"
             bgGradient={"linear(to-r, green.200, green.300)"}
             color="#000"
@@ -50,22 +51,50 @@ const SideMenuList = () => {
 
   const menuItems = {
     ADMIN: [
-      { label: "Create Asset", icon: <FaPlusCircle />, path: "create-asset" },
-      { label: "Asset List", icon: <FaListAlt />, path: "asset-list" },
-      { label: "User List", icon: <FaListAlt />, path: "user-list" },
-      { label: "Dashboard", icon: <FaChartPie />, path: "asset-dashboard" },
+      {
+        label: "Create Asset",
+        icon: <FaPlusCircle data-testid="FaPlusCircle" />,
+        path: "create-asset",
+      },
+      {
+        label: "Asset List",
+        icon: <FaListAlt data-testid="FaListAlt" />,
+        path: "asset-list",
+      },
+      {
+        label: "User List",
+        icon: <FaListAlt data-testid="FaListAlt" />,
+        path: "user-list",
+      },
+      {
+        label: "Dashboard",
+        icon: <FaChartPie data-testid="FaChartPie" />,
+        path: "asset-dashboard",
+      },
     ],
     EMPLOYEE: [
       {
         label: "Create Request",
-        icon: <FaPlusCircle />,
+        icon: <FaPlusCircle data-testid="FaPlusCircle" />,
         path: "create-request",
       },
-      { label: "Dashboard", icon: <FaChartPie />, path: "employee-dashboard" },
+      {
+        label: "Dashboard",
+        icon: <FaChartPie data-testid="FaChartPie" />,
+        path: "employee-dashboard",
+      },
     ],
     MANAGER: [
-      { label: "Asset List", icon: <FaListAlt />, path: "assets" },
-      { label: "Requests List", icon: <FaChartPie />, path: "request-list" },
+      {
+        label: "Asset List",
+        icon: <FaListAlt data-testid="FaListAlt" />,
+        path: "assets",
+      },
+      {
+        label: "Requests List",
+        icon: <FaChartPie data-testid="FaChartPie" />,
+        path: "request-list",
+      },
       // { label: "Dashboard", icon: <FaChartPie />, path: "dashboard" },
     ],
   };
@@ -88,7 +117,7 @@ const SideMenuList = () => {
         fontSize={"1.8rem"}
         borderTopRadius={"10px"}
       >
-        <Image src="/ams.png" h={"60px"} w={"60px"}/>
+        <Image src="/ams.png" h={"60px"} w={"60px"} alt="AMS Logo" />
       </Center>
       <Stack p="3" mt="3" spacing={3}>
         {menuItems[role]?.map((item) => (
@@ -115,6 +144,7 @@ const SideMenuList = () => {
           colorScheme="red"
           leftIcon={
             <FaDoorOpen
+              data-testid="FaDoorOpen"
               style={{ position: "absolute", left: "20px", top: "15px" }}
             />
           }
