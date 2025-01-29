@@ -1,0 +1,22 @@
+{
+    "register": "Register",
+    "name": "Name",
+    "employeeId": "Employee ID",
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "registerButton": "Register",
+    "nameRequired": "Please Enter Name",
+    "nameMinLength": "Name must be at least 3 characters long",
+    "employeeIdRequired": "Please Enter Employee ID",
+    "employeeIdInvalid": "Employee ID must be a number",
+    "emailRequired": "Please Enter Email",
+    "emailInvalid": "Invalid email format",
+    "passwordRequired": "Please Enter Password",
+    "passwordMinLength": "Password must be at least 8 characters long",
+    "passwordUppercase": "Password must contain at least one uppercase letter",
+    "registrationSuccess": "Registration Successful!",
+    "registrationFailed": "Registration Failed!",
+    "unexpectedError": "An unexpected error occurred!"
+  }
+  

@@ -1,0 +1,22 @@
+{
+    "register": "रजिस्टर करें",
+    "name": "नाम",
+    "employeeId": "कर्मचारी आईडी",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "login": "लॉगिन",
+    "registerButton": "रजिस्टर करें",
+    "nameRequired": "कृपया नाम दर्ज करें",
+    "nameMinLength": "नाम कम से कम 3 अक्षरों का होना चाहिए",
+    "employeeIdRequired": "कृपया कर्मचारी आईडी दर्ज करें",
+    "employeeIdInvalid": "कर्मचारी आईडी केवल संख्यात्मक होनी चाहिए",
+    "emailRequired": "कृपया ईमेल दर्ज करें",
+    "emailInvalid": "अमान्य ईमेल प्रारूप",
+    "passwordRequired": "कृपया पासवर्ड दर्ज करें",
+    "passwordMinLength": "पासवर्ड कम से कम 8 अक्षरों का होना चाहिए",
+    "passwordUppercase": "पासवर्ड में कम से कम एक बड़ा अक्षर होना चाहिए",
+    "registrationSuccess": "पंजीकरण सफल!",
+    "registrationFailed": "पंजीकरण विफल!",
+    "unexpectedError": "एक अप्रत्याशित त्रुटि हुई!"
+  }
+  

@@ -1,8 +1,9 @@
 import { Box, Button, Center, Image, Stack } from "@chakra-ui/react";
 import React from "react";
 import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
 import { FaListAlt, FaPlusCircle } from "react-icons/fa";
-import { FaChartPie, FaDoorOpen } from "react-icons/fa6";
+import { FaChartPie, FaDoorOpen, FaGlobe } from "react-icons/fa6";
 import { Outlet, useNavigate } from "react-router";
 
 const MainLayout = () => {
@@ -48,7 +49,12 @@ const MainLayout = () => {
 const SideMenuList = () => {
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
+  const { i18n } = useTranslation();
 
+  // Toggle language between English & Hindi
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === "en" ? "hi" : "en");
+  };
   const menuItems = {
     ADMIN: [
       {
@@ -136,6 +142,23 @@ const SideMenuList = () => {
         ))}
       </Stack>
       <Box position={"absolute"} bottom={"0px"} p="3" w="100%">
+        <Button
+          variant="ghost"
+          border={"1px solid #f1f1f1"}
+          w="100%"
+          size="lg"
+          colorScheme="blue"
+          mb="15px"
+          leftIcon={
+            <FaGlobe
+              data-testid="FaGlobe"
+              style={{ position: "absolute", left: "20px", top: "15px" }}
+            />
+          }
+          onClick={toggleLanguage}
+        >
+          {i18n.language === "en" ? "हिंदी में बदलें" : "Switch to English"}
+        </Button>
         <Button
           variant="ghost"
           border={"1px solid #f1f1f1"}

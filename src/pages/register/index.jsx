@@ -12,14 +12,21 @@ import {
 } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { FaRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { userRegister } from "../../services/authForm";
 
 const RegisterPage = () => {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const toast = useToast();
 
+  // Toggle language between English & Hindi
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === "en" ? "hi" : "en");
+  };
+  
   const {
     register,
     handleSubmit,
@@ -40,16 +47,14 @@ const RegisterPage = () => {
     onSuccess: (data) => {
       if (data?.status === "success") {
         toast({
-          title: "Registration Successful!",
+          title: t("registrationSuccess"),
           status: "success",
         });
         navigate("/login"); // Redirect to login page
       } else {
-        const errMessage = data?.message || "An unexpected error occurred!";
-        console.error("Error in Response:", data);
-
+        const errMessage = data?.message || t("unexpectedError");
         toast({
-          title: "Registration Failed!",
+          title: t("registrationFailed"),
           description: errMessage,
           status: "error",
           duration: 5000,
@@ -58,11 +63,9 @@ const RegisterPage = () => {
       }
     },
     onError: (err) => {
-      console.error("Mutation Error Object:", err);
-
-      const errMessage = err?.message || "An unexpected error occurred!";
+      const errMessage = err?.message || t("unexpectedError");
       toast({
-        title: "Registration Failed!",
+        title: t("registrationFailed"),
         description: errMessage,
         status: "error",
         duration: 5000,
@@ -86,7 +89,7 @@ const RegisterPage = () => {
         fontSize={"1.25rem"}
         color={"GrayText"}
       >
-        <Box ml="2">REGISTER</Box>
+        <Box ml="2">{t("register")}</Box>
       </Center>
       <Stack p="4" w="100%">
         <Stack
@@ -98,15 +101,12 @@ const RegisterPage = () => {
           border={"1px solid #9ae6b4"}
         >
           <FormControl isInvalid={errors.name}>
-            <FormLabel>Name</FormLabel>
+            <FormLabel>{t("name")}</FormLabel>
             <Input
               size={"lg"}
               {...register("name", {
-                required: "Please Enter Name",
-                minLength: {
-                  value: 3,
-                  message: "Name must be at least 3 characters long",
-                },
+                required: t("nameRequired"),
+                minLength: { value: 3, message: t("nameMinLength") },
               })}
             />
             <FormErrorMessage>
@@ -115,15 +115,12 @@ const RegisterPage = () => {
           </FormControl>
 
           <FormControl isInvalid={errors.employeeId}>
-            <FormLabel>Employee ID</FormLabel>
+            <FormLabel>{t("employeeId")}</FormLabel>
             <Input
               size={"lg"}
               {...register("employeeId", {
-                required: "Please Enter Employee ID",
-                pattern: {
-                  value: /^[0-9]+$/,
-                  message: "Employee ID must be a number",
-                },
+                required: t("employeeIdRequired"),
+                pattern: { value: /^[0-9]+$/, message: t("employeeIdInvalid") },
               })}
             />
             <FormErrorMessage>
@@ -132,14 +129,14 @@ const RegisterPage = () => {
           </FormControl>
 
           <FormControl isInvalid={errors.email}>
-            <FormLabel>Email</FormLabel>
+            <FormLabel>{t("email")}</FormLabel>
             <Input
               size={"lg"}
               {...register("email", {
-                required: "Please Enter Email",
+                required: t("emailRequired"),
                 pattern: {
                   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                  message: "Invalid email format",
+                  message: t("emailInvalid"),
                 },
               })}
             />
@@ -149,19 +146,15 @@ const RegisterPage = () => {
           </FormControl>
 
           <FormControl isInvalid={errors.password}>
-            <FormLabel>Password</FormLabel>
+            <FormLabel>{t("password")}</FormLabel>
             <Input
               type="password"
               size="lg"
               {...register("password", {
-                required: "Please Enter Password",
-                minLength: {
-                  value: 8,
-                  message: "Password must be at least 8 characters long",
-                },
+                required: t("passwordRequired"),
+                minLength: { value: 8, message: t("passwordMinLength") },
                 validate: (value) =>
-                  /[A-Z]/.test(value) ||
-                  "Password must contain at least one uppercase letter",
+                  /[A-Z]/.test(value) || t("passwordUppercase"),
               })}
             />
             <FormErrorMessage>
@@ -178,20 +171,28 @@ const RegisterPage = () => {
               isLoading={mutRegistration.isLoading}
               onClick={handleSubmit(onSubmit)}
             >
-              Register
+              {t("registerButton")}
             </Button>
           </Box>
           {/* Added Login Link */}
           <Text fontSize="sm" color="gray.600" textAlign="center" mt="4">
-            Login &nbsp;
+            {t("login")} &nbsp;
             <Button
               variant="link"
               colorScheme="blue"
               onClick={() => navigate("/login")}
             >
-              Login
+              {t("login")}
             </Button>
           </Text>
+
+          {/* Language Switcher */}
+          <Button
+           onClick={toggleLanguage}
+          >
+            {/* {i18n.language === "en" ? "Switch to Hindi" : "अंग्रेज़ी में बदलें"} */}
+            {i18n.language === "en" ? "हिंदी में बदलें" : "Switch to English"}
+          </Button>
         </Stack>
       </Stack>
     </Box>
