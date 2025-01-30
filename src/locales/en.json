@@ -1,4 +1,5 @@
 {
+  "Register": {
     "register": "Register",
     "name": "Name",
     "employeeId": "Employee ID",
@@ -18,5 +19,38 @@
     "registrationSuccess": "Registration Successful!",
     "registrationFailed": "Registration Failed!",
     "unexpectedError": "An unexpected error occurred!"
+  },
+  "Login": {
+    "login": "Login",
+    "email": "Email",
+    "password": "Password",
+    "pleaseEnterEmail": "Please enter email",
+    "invalidEmailFormat": "Invalid email format",
+    "pleaseEnterPassword": "Please enter password",
+    "passwordMinLength": "Password must be at least 8 characters long",
+    "passwordUppercase": "Password must contain at least one uppercase letter",
+    "registerPrompt": "Don’t have an account?",
+    "register": "Register",
+    "invalidCredentials": "Invalid username or password!",
+    "noAccount": "Don’t have an account?",
+    "invalidRole": "Invalid role. Please contact support.",
+    "loginTitle": "AMS - Login"
+  },
+  "Asset": {
+    "addNewAsset": "Add New Asset",
+    "assetName": "Asset Name",
+    "assetType": "Asset Type",
+    "assetIdentifier": "Asset Identifier",
+    "purchaseDate": "Purchase Date",
+    "warrantyEndDate": "Warranty End Date",
+    "addAssetButton": "Add Asset",
+    "assetNameRequired": "Asset name is required",
+    "assetNameLength": "Asset name must be at least 3 characters long",
+    "assetTypeRequired": "Asset type is required",
+    "assetIdentifierRequired": "Asset Identifier is required",
+    "purchaseDateRequired": "Purchase date is required",
+    "warrantyEndDateRequired": "Warranty end date is required",
+    "successMessage": "Asset added successfully!",
+    "errorMessage": "Error adding asset"
   }
-  
+}

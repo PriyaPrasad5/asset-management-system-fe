@@ -5,7 +5,6 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Image,
   Input,
   Stack,
   Text,
@@ -15,11 +14,13 @@ import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { FaChartSimple, FaRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router";
 import { userLogin } from "../../services/authForm";
 
 const LoginPage = () => {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const {
     register,
@@ -27,6 +28,11 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm({ defaultValues: { email: "", password: "" } });
   const toast = useToast();
+
+  // Toggle language between English & Hindi
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === "en" ? "hi" : "en");
+  };
 
   const mutLogin = useMutation({ mutationFn: userLogin });
 
@@ -55,18 +61,18 @@ const LoginPage = () => {
         } else if (role === "MANAGER") {
           navigate("/app/request-list");
         } else {
-          alert("Invalid role. Please contact support.");
+          alert(t("Login.invalidRole"));
         }
       } else {
-        toast({ title: "Invalid username or password!", status: "error" });
+        toast({ title: t("Login.invalidCredentials"), status: "error" });
       }
     }
-  }, [mutLogin.isSuccess, mutLogin.data, navigate]);
+  }, [mutLogin.isSuccess, mutLogin.data, navigate, t]);
 
   return (
     <Box w="100%" maxW="400px" minH="100vh" mx="auto" bg="var(--tgsb)">
       <Helmet>
-        <title>AMS - Login</title>
+        <title>{t("Login.loginTitle")}</title>
       </Helmet>
       <Center
         bg="#fff"
@@ -92,7 +98,7 @@ const LoginPage = () => {
           color={"GrayText"}
         >
           <FaChartSimple />
-          <Box ml="2">LOGIN</Box>
+          <Box ml="2">{t("Login.login")}</Box>
         </Center>
         <Stack
           w="100%"
@@ -103,14 +109,14 @@ const LoginPage = () => {
           border={"1px solid #9ae6b4"}
         >
           <FormControl isInvalid={errors.email}>
-            <FormLabel>Email</FormLabel>
+            <FormLabel>{t("Login.email")}</FormLabel>
             <Input
               size={"lg"}
               {...register("email", {
-                required: "Please Enter Email",
+                required: t("Login.pleaseEnterEmail"),
                 pattern: {
                   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                  message: "Invalid email format",
+                  message: t("Login.invalidEmailFormat"),
                 },
               })}
             />
@@ -119,19 +125,19 @@ const LoginPage = () => {
             </FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={errors.password}>
-            <FormLabel>Password</FormLabel>
+            <FormLabel>{t("Login.password")}</FormLabel>
             <Input
               type="password"
               size="lg"
               {...register("password", {
-                required: "Please Enter Password",
+                required: t("Login.pleaseEnterPassword"),
                 minLength: {
                   value: 8,
-                  message: "Password must be at least 8 characters long",
+                  message: t("Login.passwordMinLength"),
                 },
                 validate: (value) =>
                   /[A-Z]/.test(value) ||
-                  "Password must contain at least one uppercase letter",
+                 t ("passwordUppercase"),
               })}
             />
             <FormErrorMessage>
@@ -146,20 +152,22 @@ const LoginPage = () => {
               rightIcon={<FaRightLong />}
               onClick={handleSubmit(validateLogin)}
             >
-              Login
+              {t("Login.login")}
             </Button>
           </Box>
-          {/* Added register Link */}
           <Text fontSize="sm" color="gray.600" textAlign="center" mt="4">
-            Don’t have an account?&nbsp;
+            {t("Login.noAccount")}&nbsp;
             <Button
               variant="link"
               colorScheme="blue"
               onClick={() => navigate("/register")}
             >
-              Register
+              {t("Login.register")}
             </Button>
           </Text>
+          <Button onClick={toggleLanguage} colorScheme="blue" mb={4}>
+            {i18n.language === "en" ? "Switch to Hindi" : "अंग्रेज़ी में बदलें"}
+          </Button>
         </Stack>
       </Stack>
     </Box>

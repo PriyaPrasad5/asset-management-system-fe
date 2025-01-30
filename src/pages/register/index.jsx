@@ -47,14 +47,14 @@ const RegisterPage = () => {
     onSuccess: (data) => {
       if (data?.status === "success") {
         toast({
-          title: t("registrationSuccess"),
+          title: t("Register.registrationSuccess"),
           status: "success",
         });
         navigate("/login"); // Redirect to login page
       } else {
-        const errMessage = data?.message || t("unexpectedError");
+        const errMessage = data?.message || t("Register.unexpectedError");
         toast({
-          title: t("registrationFailed"),
+          title: t("Register.registrationFailed"),
           description: errMessage,
           status: "error",
           duration: 5000,
@@ -63,9 +63,9 @@ const RegisterPage = () => {
       }
     },
     onError: (err) => {
-      const errMessage = err?.message || t("unexpectedError");
+      const errMessage = err?.message || t("Register.unexpectedError");
       toast({
-        title: t("registrationFailed"),
+        title: t("Register.registrationFailed"),
         description: errMessage,
         status: "error",
         duration: 5000,
@@ -89,7 +89,7 @@ const RegisterPage = () => {
         fontSize={"1.25rem"}
         color={"GrayText"}
       >
-        <Box ml="2">{t("register")}</Box>
+        <Box ml="2">{t("Register.register")}</Box>
       </Center>
       <Stack p="4" w="100%">
         <Stack
@@ -101,12 +101,12 @@ const RegisterPage = () => {
           border={"1px solid #9ae6b4"}
         >
           <FormControl isInvalid={errors.name}>
-            <FormLabel>{t("name")}</FormLabel>
+            <FormLabel>{t("Register.name")}</FormLabel>
             <Input
               size={"lg"}
               {...register("name", {
-                required: t("nameRequired"),
-                minLength: { value: 3, message: t("nameMinLength") },
+                required: t("Register.nameRequired"),
+                minLength: { value: 3, message: t("Register.nameMinLength") },
               })}
             />
             <FormErrorMessage>
@@ -115,12 +115,12 @@ const RegisterPage = () => {
           </FormControl>
 
           <FormControl isInvalid={errors.employeeId}>
-            <FormLabel>{t("employeeId")}</FormLabel>
+            <FormLabel>{t("Register.employeeId")}</FormLabel>
             <Input
               size={"lg"}
               {...register("employeeId", {
-                required: t("employeeIdRequired"),
-                pattern: { value: /^[0-9]+$/, message: t("employeeIdInvalid") },
+                required: t("Register.employeeIdRequired"),
+                pattern: { value: /^[0-9]+$/, message: t("Register.employeeIdInvalid") },
               })}
             />
             <FormErrorMessage>
@@ -133,10 +133,10 @@ const RegisterPage = () => {
             <Input
               size={"lg"}
               {...register("email", {
-                required: t("emailRequired"),
+                required: t("Register.emailRequired"),
                 pattern: {
                   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                  message: t("emailInvalid"),
+                  message: t("Register.emailInvalid"),
                 },
               })}
             />
@@ -146,15 +146,15 @@ const RegisterPage = () => {
           </FormControl>
 
           <FormControl isInvalid={errors.password}>
-            <FormLabel>{t("password")}</FormLabel>
+            <FormLabel>{t("Register.password")}</FormLabel>
             <Input
               type="password"
               size="lg"
               {...register("password", {
-                required: t("passwordRequired"),
-                minLength: { value: 8, message: t("passwordMinLength") },
+                required: t("Register.passwordRequired"),
+                minLength: { value: 8, message: t("Register.passwordMinLength") },
                 validate: (value) =>
-                  /[A-Z]/.test(value) || t("passwordUppercase"),
+                  /[A-Z]/.test(value) || t("Register.passwordUppercase"),
               })}
             />
             <FormErrorMessage>
@@ -171,18 +171,18 @@ const RegisterPage = () => {
               isLoading={mutRegistration.isLoading}
               onClick={handleSubmit(onSubmit)}
             >
-              {t("registerButton")}
+              {t("Register.registerButton")}
             </Button>
           </Box>
           {/* Added Login Link */}
           <Text fontSize="sm" color="gray.600" textAlign="center" mt="4">
-            {t("login")} &nbsp;
+            {t("Register.login")} &nbsp;
             <Button
               variant="link"
               colorScheme="blue"
               onClick={() => navigate("/login")}
             >
-              {t("login")}
+              {t("Register.login")}
             </Button>
           </Text>
 

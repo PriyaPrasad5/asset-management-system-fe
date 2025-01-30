@@ -1,4 +1,5 @@
 {
+  "Register": {
     "register": "रजिस्टर करें",
     "name": "नाम",
     "employeeId": "कर्मचारी आईडी",
@@ -18,5 +19,40 @@
     "registrationSuccess": "पंजीकरण सफल!",
     "registrationFailed": "पंजीकरण विफल!",
     "unexpectedError": "एक अप्रत्याशित त्रुटि हुई!"
+  },
+  "Login":{
+    "login": "लॉगिन",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "pleaseEnterEmail": "कृपया ईमेल दर्ज करें",
+    "invalidEmailFormat": "अमान्य ईमेल प्रारूप",
+    "pleaseEnterPassword": "कृपया पासवर्ड दर्ज करें",
+    "passwordMinLength": "पासवर्ड कम से कम 8 वर्णों का होना चाहिए",
+    "passwordUppercase": "पासवर्ड में कम से कम एक बड़ा अक्षर होना चाहिए",
+    "loginButton": "लॉगिन करें",
+    "registerPrompt": "क्या आपके पास खाता नहीं है?",
+    "register": "रजिस्टर करें",
+    "invalidCredentials": "अमान्य उपयोगकर्ता नाम या पासवर्ड!",
+    "noAccount": "क्या आपके पास खाता नहीं है?",
+    "invalidRole": "अमान्य भूमिका। कृपया सहायता से संपर्क करें।",
+    "loginTitle": "एएमएस - लॉगिन"
+  },
+    "Asset": {
+      "addNewAsset": "नया संपत्ति जोड़ें",
+      "assetName": "संपत्ति का नाम",
+      "assetType": "संपत्ति का प्रकार",
+      "assetIdentifier": "संपत्ति पहचानकर्ता",
+      "purchaseDate": "खरीद की तारीख",
+      "warrantyEndDate": "वारंटी समाप्ति तिथि",
+      "addAssetButton": "संपत्ति जोड़ें",
+      "assetNameRequired": "संपत्ति का नाम आवश्यक है",
+      "assetNameLength": "संपत्ति का नाम कम से कम 3 अक्षरों का होना चाहिए",
+      "assetTypeRequired": "संपत्ति का प्रकार आवश्यक है",
+      "assetIdentifierRequired": "संपत्ति पहचानकर्ता आवश्यक है",
+      "purchaseDateRequired": "खरीद की तारीख आवश्यक है",
+      "warrantyEndDateRequired": "वारंटी समाप्ति तिथि आवश्यक है",
+      "successMessage": "संपत्ति सफलतापूर्वक जोड़ी गई!",
+      "errorMessage": "संपत्ति जोड़ने में त्रुटि"
   }
   
+}

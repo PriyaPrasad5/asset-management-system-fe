@@ -12,12 +12,15 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { createAsset } from "../../services/admin";
 
 const AddAssetForm = () => {
   const toast = useToast();
   const navigate = useNavigate();
+  const { t } = useTranslation(); // Using i18n for translations
+
   const {
     register,
     handleSubmit,
@@ -31,6 +34,7 @@ const AddAssetForm = () => {
       warrantyEndDate: "",
     },
   });
+
   const mutAddAsset = useMutation({ mutationFn: createAsset });
 
   const onSubmit = (data) => {
@@ -39,13 +43,13 @@ const AddAssetForm = () => {
 
   useEffect(() => {
     if (mutAddAsset.isSuccess) {
-      toast({ title: "Asset added successfully!", status: "success" });
+      toast({ title: t("Asset.successMessage"), status: "success" });
       navigate("/app/asset-list");
     }
 
     if (mutAddAsset.isError) {
       toast({
-        title: "Error adding asset",
+        title: t("Asset.errorMessage"),
         description: mutAddAsset.error.message,
         status: "error",
       });
@@ -56,6 +60,7 @@ const AddAssetForm = () => {
     mutAddAsset.error,
     navigate,
     toast,
+    t,
   ]);
 
   return (
@@ -70,17 +75,17 @@ const AddAssetForm = () => {
       mt="9"
     >
       <Center mb="6" fontWeight="bold" fontSize="lg">
-        Add New Asset
+        {t("Asset.addNewAsset")}
       </Center>
       <Stack spacing="4">
         <FormControl isInvalid={errors.name}>
-          <FormLabel>Asset Name</FormLabel>
+          <FormLabel>{t("Asset.assetName")}</FormLabel>
           <Input
             {...register("name", {
-              required: "Asset name is required",
+              required: t("Asset.assetNameRequired"),
               minLength: {
                 value: 3,
-                message: "Asset name must be at least 3 characters long",
+                message: t("Asset.assetNameLength"),
               },
             })}
           />
@@ -90,10 +95,10 @@ const AddAssetForm = () => {
         </FormControl>
 
         <FormControl isInvalid={errors.type}>
-          <FormLabel>Asset Type</FormLabel>
+          <FormLabel>{t("Asset.assetType")}</FormLabel>
           <Input
             {...register("type", {
-              required: "Asset type is required",
+              required: t("Asset.assetTypeRequired"),
             })}
           />
           <FormErrorMessage>
@@ -102,14 +107,10 @@ const AddAssetForm = () => {
         </FormControl>
 
         <FormControl isInvalid={errors.assetIdentifier}>
-          <FormLabel>Asset Identifier</FormLabel>
+          <FormLabel>{t("Asset.assetIdentifier")}</FormLabel>
           <Input
             {...register("assetIdentifier", {
-              required: "Asset Identifier is required",
-              // pattern: {
-              //   value: /^[0-9]+$/,
-              //   message: "Asset ID must be a number",
-              // },
+              required: t("Asset.assetIdentifierRequired"),
             })}
           />
           <FormErrorMessage>
@@ -118,11 +119,11 @@ const AddAssetForm = () => {
         </FormControl>
 
         <FormControl isInvalid={errors.purchaseDate}>
-          <FormLabel>Purchase Date</FormLabel>
+          <FormLabel>{t("Asset.purchaseDate")}</FormLabel>
           <Input
             type="date"
             {...register("purchaseDate", {
-              required: "Purchase date is required",
+              required: t("Asset.purchaseDateRequired"),
             })}
           />
           <FormErrorMessage>
@@ -131,11 +132,11 @@ const AddAssetForm = () => {
         </FormControl>
 
         <FormControl isInvalid={errors.warrantyEndDate}>
-          <FormLabel>Warranty End Date</FormLabel>
+          <FormLabel>{t("Asset.warrantyEndDate")}</FormLabel>
           <Input
             type="date"
             {...register("warrantyEndDate", {
-              required: "Warranty end date is required",
+              required: t("Asset.warrantyEndDateRequired"),
             })}
           />
           <FormErrorMessage>
@@ -149,7 +150,7 @@ const AddAssetForm = () => {
           onClick={handleSubmit(onSubmit)}
           isLoading={mutAddAsset.isLoading}
         >
-          Add Asset
+          {t("Asset.addAssetButton")}
         </Button>
       </Stack>
     </Box>
