@@ -31,6 +31,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import {
@@ -47,6 +48,7 @@ const AssetList = () => {
   const { isOpen, onOpen, onClose } = useDisclosure(); // For modal visibility
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [searchDate, setSearchDate] = useState("");
+  const { t } = useTranslation();
 
   // Fetch assets using useQuery
   const { data, isLoading, isError, error } = useQuery({
@@ -60,16 +62,16 @@ const AssetList = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(["assets"]);
         toast({
-          title: "Asset Deleted",
-          description: "The asset has been deleted successfully.",
+          title: t("Asset.assetDeleted"),
+          description: t("Asset.assetDeletedDesc"),
           status: "success",
         });
         navigate("/app/asset-list");
       },
       onError: (err) => {
         toast({
-          title: "Error deleting asset",
-          description: err?.message || "An error occurred",
+          title: t("Asset.errorDeletingAsset"),
+          description: err?.message || t("Asset.errorOccurred"),
           status: "error",
         });
       },
@@ -81,8 +83,8 @@ const AssetList = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(["assets"]);
       toast({
-        title: "Asset Updated",
-        description: "The asset has been updated successfully.",
+        title: t("Asset.assetUpdated"),
+        description: t("Asset.assetUpdatedDesc"),
         status: "success",
       });
       onClose();
@@ -90,8 +92,8 @@ const AssetList = () => {
     },
     onError: (err) => {
       toast({
-        title: "Error updating asset",
-        description: err?.message || "An error occurred",
+        title: t("Asset.errorUpdatingAsset"),
+        description: err?.message || t("Asset.errorOccurred"),
         status: "error",
       });
     },
@@ -116,8 +118,8 @@ const AssetList = () => {
   const handleDelete = (assetId, assetStatus) => {
     if (assetStatus === "ASSIGNED") {
       toast({
-        title: "Cannot Delete Asset",
-        description: "The asset is assigned and cannot be deleted.",
+        title: t("Asset.cannotDeleteAsset"),
+        description: t("Asset.assignedAssetCannotDelete"),
         status: "warning",
         duration: 5000,
         isClosable: true,
@@ -131,8 +133,8 @@ const AssetList = () => {
   const onSubmit = (data) => {
     if (!data.status || !data.warrantyEndDate || !data.nextServiceDate) {
       toast({
-        title: "Validation Error",
-        description: "All fields are required.",
+        title: t("Asset.validationError"),
+        description: t("Asset.allFieldsRequired"),
         status: "error",
         // duration: 5000,
         // isClosable: true,
@@ -149,8 +151,8 @@ const AssetList = () => {
   const handleSearch = async () => {
     if (!searchDate) {
       toast({
-        title: "Validation Error",
-        description: "Please enter a valid date.",
+        title: t("Asset.validationError"),
+        description: t("Asset.enterValidDate"),
         status: "error",
       });
       return;
@@ -161,8 +163,8 @@ const AssetList = () => {
       queryClient.setQueryData(["assets"], { data: response.data });
     } catch (err) {
       toast({
-        title: "Error searching assets",
-        description: err?.message || "An error occurred while searching",
+        title: t("Asset.errorSearchingAssets"),
+        description: err?.message || t("Asset.errorOccurred"),
         status: "error",
       });
     }
@@ -171,7 +173,7 @@ const AssetList = () => {
   if (isError) {
     console.error("Error fetching assets:", error);
     toast({
-      title: "Error loading assets",
+      title: t("Asset.error"),
       description: error.message,
       status: "error",
       // duration: 5000,
@@ -192,7 +194,7 @@ const AssetList = () => {
   return (
     <Box maxW="none" mx="auto" p={4}>
       <Text fontSize="2xl" fontWeight="bold" mb={4}>
-        Asset List
+        {t("Asset.assetList")}
       </Text>
       {/* Search Input */}
       <Box mb={4} display="flex" alignItems="center">
@@ -200,11 +202,11 @@ const AssetList = () => {
           type="date"
           value={searchDate}
           onChange={(e) => setSearchDate(e.target.value)}
-          placeholder="Search by Warranty Date"
+          placeholder={t("Asset.searchByDate")}
           mr={2}
         />
         <Button colorScheme="blue" onClick={handleSearch}>
-          Search
+          {t("Asset.search")}
         </Button>
       </Box>
       <TableContainer border="1px solid #e2e8f0" borderRadius="md">
@@ -212,15 +214,15 @@ const AssetList = () => {
           <Thead bg="gray.100">
             <Tr>
               <Th>#</Th>
-              <Th>Asset ID</Th>
-              <Th>Asset Identifier</Th>
-              <Th>Name</Th>
-              <Th>Type</Th>
-              <Th>Status</Th>
-              <Th>Purchase Date</Th>
-              <Th>Warranty End Date</Th>
-              <Th>User Id</Th>
-              <Th>Actions</Th>
+              <Th>{t("Asset.assetId")}</Th>
+              <Th>{t("Asset.assetIdentifier")}</Th>
+              <Th>{t("Asset.name")}</Th>
+              <Th>{t("Asset.type")}</Th>
+              <Th>{t("Asset.status")}</Th>
+              <Th>{t("Asset.purchaseDate")}</Th>
+              <Th>{t("Asset.warrantyEndDate")}</Th>
+              <Th>{t("Asset.userId")}</Th>
+              <Th>{t("Asset.actions")}</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -269,7 +271,7 @@ const AssetList = () => {
                     shouldWrapChildren
                   >
                     <IconButton
-                      aria-label="Delete Asset"
+                      aria-label={t("Asset.deleteAsset")}
                       icon={<FaTrash />}
                       colorScheme="red"
                       size="sm"
@@ -289,34 +291,36 @@ const AssetList = () => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Edit Asset</ModalHeader>
+          <ModalHeader>{t("Asset.editAsset")}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <FormControl isRequired>
-              <FormLabel>Status</FormLabel>
+              <FormLabel>{t("Asset.status")}</FormLabel>
               <Select {...register("status")}>
-                <option value="AVAILABLE">Available</option>
-                <option value="UNDER_MAINTENANCE">Under Maintenance</option>
-                <option value="ASSIGNED">Assigned</option>
+                <option value="AVAILABLE">{t("Asset.available")}</option>
+                <option value="UNDER_MAINTENANCE">
+                  {t("Asset.underMaintenance")}
+                </option>
+                <option value="ASSIGNED">{t("Asset.assigned")}</option>
               </Select>
               {errors.status && (
-                <Text color="red.500">This field is required</Text>
+                <Text color="red.500">{t("Asset.requiredField")}</Text>
               )}
             </FormControl>
 
             <FormControl isRequired mt={4}>
-              <FormLabel>Warranty End Date</FormLabel>
+              <FormLabel>{t("Asset.warrantyEndDate")}</FormLabel>
               <Input type="date" {...register("warrantyEndDate")} />
               {errors.warrantyEndDate && (
-                <Text color="red.500">This field is required</Text>
+                <Text color="red.500">{t("Asset.requiredField")}</Text>
               )}
             </FormControl>
 
             <FormControl isRequired mt={4}>
-              <FormLabel>Next Service Date</FormLabel>
+              <FormLabel>{t("Asset.nextServiceDate")}</FormLabel>
               <Input type="date" {...register("nextServiceDate")} />
               {errors.nextServiceDate && (
-                <Text color="red.500">This field is required</Text>
+                <Text color="red.500">{t("Asset.requiredField")}</Text>
               )}
             </FormControl>
           </ModalBody>
@@ -328,10 +332,10 @@ const AssetList = () => {
               onClick={handleSubmit(onSubmit)}
               isLoading={mutUpdateAsset.isLoading}
             >
-              Update
+              {t("Asset.update")}
             </Button>
             <Button variant="ghost" onClick={onClose}>
-              Cancel
+              {t("Asset.cancel")}
             </Button>
           </ModalFooter>
         </ModalContent>

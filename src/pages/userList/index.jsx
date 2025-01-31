@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Button,
@@ -14,13 +13,16 @@ import {
   Tr,
   useToast,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { fetchUsers } from "../../services/admin";
 
 const UserList = () => {
   const toast = useToast();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["users"],
@@ -41,7 +43,7 @@ const UserList = () => {
 
   if (isError) {
     toast({
-      title: "Error",
+      title: t("UserList.error"),
       description: error.message,
       status: "error",
     });
@@ -53,18 +55,18 @@ const UserList = () => {
   return (
     <Box maxW="container.lg" mx="auto" p={4}>
       <Text fontSize="2xl" fontWeight="bold" mb={4}>
-        User List
+        {t("UserList.userList")}
       </Text>
       <TableContainer border="1px solid #e2e8f0" borderRadius="md">
         <Table variant="simple">
           <Thead bg="gray.100">
             <Tr>
               <Th>#</Th>
-              <Th>Name</Th>
-              <Th>Email</Th>
-              <Th>Role</Th>
-              <Th>Active</Th>
-              <Th textAlign="right">Action</Th>
+              <Th>{t("UserList.name")}</Th>
+              <Th>{t("UserList.email")}</Th>
+              <Th>{t("UserList.role")}</Th>
+              <Th>{t("UserList.active")}</Th>
+              <Th textAlign="right">{t("UserList.action")}</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -81,7 +83,7 @@ const UserList = () => {
                     colorScheme="blue"
                     onClick={() => handleViewDetails(user.id)}
                   >
-                    View
+                    {t("UserList.view")}
                   </Button>
                 </Td>
               </Tr>

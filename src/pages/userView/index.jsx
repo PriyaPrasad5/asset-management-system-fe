@@ -16,10 +16,12 @@ import {
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchUserDetails } from "../../services/admin";
 
 const UserDetails = () => {
+  const { t } = useTranslation();
   const { userId } = useParams();
   const navigate = useNavigate();
 
@@ -39,7 +41,9 @@ const UserDetails = () => {
   if (isError) {
     return (
       <Center minH="100vh">
-        <Text color="red.500">Error: {error.message}</Text>
+        <Text color="red.500">
+          {t("UserDetails.error")}: {error.message}
+        </Text>
       </Center>
     );
   }
@@ -50,7 +54,7 @@ const UserDetails = () => {
   return (
     <Box maxW="container.lg" mx="auto" p={6}>
       <Button mb={6} onClick={() => navigate(-1)} variant="ghost">
-        Back
+        {t("UserDetails.back")}
       </Button>
 
       <VStack spacing={8} align="stretch">
@@ -58,7 +62,7 @@ const UserDetails = () => {
         {user ? (
           <Box>
             <Text fontSize="2xl" fontWeight="bold" mb={4}>
-              User Details
+              {t("UserDetails.title")}
             </Text>
             <VStack
               spacing={4}
@@ -70,38 +74,40 @@ const UserDetails = () => {
             >
               <Flex justify="space-between">
                 <Text fontWeight="medium" color="gray.600">
-                  Name:
+                  {t("UserDetails.name")}:
                 </Text>
                 <Text color="gray.800">{user.name}</Text>
               </Flex>
               <Flex justify="space-between">
                 <Text fontWeight="medium" color="gray.600">
-                  Email:
+                  {t("UserDetails.email")}:
                 </Text>
                 <Text color="gray.800">{user.email}</Text>
               </Flex>
               <Flex justify="space-between">
                 <Text fontWeight="medium" color="gray.600">
-                  Role:
+                  {t("UserDetails.role")}:
                 </Text>
                 <Text color="gray.800">{user.role}</Text>
               </Flex>
               <Flex justify="space-between">
                 <Text fontWeight="medium" color="gray.600">
-                  Active:
+                  {t("UserDetails.active")}:
                 </Text>
-                <Text color="gray.800">{user.isActive ? "Yes" : "No"}</Text>
+                <Text color="gray.800">
+                  {user.isActive ? t("UserDetails.yes") : t("UserDetails.no")}
+                </Text>
               </Flex>
             </VStack>
           </Box>
         ) : (
-          <Text>No user details available</Text>
+          <Text>{t("UserDetails.noUserDetails")}</Text>
         )}
 
         {/* History */}
         <Box>
           <Text fontSize="2xl" fontWeight="bold" mb={4}>
-            History
+            {t("UserDetails.history")}
           </Text>
           {history.length > 0 ? (
             <TableContainer>
@@ -112,13 +118,13 @@ const UserDetails = () => {
                       #
                     </Th>
                     <Th color="gray.600" fontWeight="medium">
-                      Type
+                      {t("UserDetails.type")}
                     </Th>
                     <Th color="gray.600" fontWeight="medium">
-                      Asset
+                      {t("UserDetails.asset")}
                     </Th>
                     <Th color="gray.600" fontWeight="medium">
-                      Date
+                      {t("UserDetails.date")}
                     </Th>
                   </Tr>
                 </Thead>
@@ -137,7 +143,7 @@ const UserDetails = () => {
               </Table>
             </TableContainer>
           ) : (
-            <Text>No history available</Text>
+            <Text>{t("UserDetails.noHistory")}</Text>
           )}
         </Box>
       </VStack>

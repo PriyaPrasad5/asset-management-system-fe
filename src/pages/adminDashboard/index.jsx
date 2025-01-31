@@ -14,9 +14,11 @@ import {
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { fetchAssetStats } from "../../services/admin";
 
 const Dashboard = () => {
+  const { t } = useTranslation();
   const toast = useToast();
 
   const { data, isLoading, isError, error } = useQuery({
@@ -34,15 +36,15 @@ const Dashboard = () => {
 
   if (isError) {
     toast({
-      title: "Error loading dashboard",
-      description: error?.message || "Failed to fetch asset stats.",
+      title: t("Dashboard.errorTitle"),
+      description: error?.message || t("Dashboard.errorDescription"),
       status: "error",
       isClosable: true,
     });
     return (
       <Center minH="100vh">
         <Text color="red.500" fontSize="lg">
-          Unable to load dashboard data.
+          {t("Dashboard.errorMessage")}
         </Text>
       </Center>
     );
@@ -61,38 +63,40 @@ const Dashboard = () => {
   return (
     <Box maxW="1000px" mx="auto" p={6}>
       <Text fontSize="2xl" fontWeight="bold" mb={6}>
-        Asset Dashboard
+        {t("Dashboard.title")}
       </Text>
 
-      {/* Summary Section */}
       <Grid templateColumns="repeat(4, 1fr)" gap={6} mb={8}>
         <Stat border="1px solid #e2e8f0" borderRadius="md" p={4}>
-          <StatLabel>Total Assets</StatLabel>
+          <StatLabel>{t("Dashboard.totalAssets")}</StatLabel>
           <StatNumber>{totalAssets}</StatNumber>
         </Stat>
 
         <Stat border="1px solid #e2e8f0" borderRadius="md" p={4}>
-          <StatLabel>Assigned Assets</StatLabel>
+          <StatLabel>{t("Dashboard.assignedAssets")}</StatLabel>
           <StatNumber>{assignedAssets}</StatNumber>
-          <StatHelpText>{assignedPercentageValue}% of total</StatHelpText>
+          <StatHelpText>
+            {assignedPercentageValue}% {t("Dashboard.ofTotal")}
+          </StatHelpText>
         </Stat>
 
         <Stat border="1px solid #e2e8f0" borderRadius="md" p={4}>
-          <StatLabel>Available Assets</StatLabel>
+          <StatLabel>{t("Dashboard.availableAssets")}</StatLabel>
           <StatNumber>{availableAssets}</StatNumber>
-          <StatHelpText>{availablePercentageValue}% of total</StatHelpText>
+          <StatHelpText>
+            {availablePercentageValue}% {t("Dashboard.ofTotal")}
+          </StatHelpText>
         </Stat>
 
         <Stat border="1px solid #e2e8f0" borderRadius="md" p={4}>
-          <StatLabel>Under Maintenance</StatLabel>
+          <StatLabel>{t("Dashboard.underMaintenance")}</StatLabel>
           <StatNumber>{underMaintenanceAssets}</StatNumber>
           <StatHelpText>
-            {underMaintenancePercentageValue}% of total
+            {underMaintenancePercentageValue}% {t("Dashboard.ofTotal")}
           </StatHelpText>
         </Stat>
       </Grid>
 
-      {/* Circular Progress Section */}
       <Grid templateColumns="repeat(3, 1fr)" gap={6}>
         <Box textAlign="center">
           <CircularProgress
@@ -106,7 +110,7 @@ const Dashboard = () => {
             </CircularProgressLabel>
           </CircularProgress>
           <Text mt={2} fontWeight="medium">
-            Assigned
+            {t("Dashboard.assigned")}
           </Text>
         </Box>
 
@@ -122,7 +126,7 @@ const Dashboard = () => {
             </CircularProgressLabel>
           </CircularProgress>
           <Text mt={2} fontWeight="medium">
-            Available
+            {t("Dashboard.available")}
           </Text>
         </Box>
 
@@ -138,7 +142,7 @@ const Dashboard = () => {
             </CircularProgressLabel>
           </CircularProgress>
           <Text mt={2} fontWeight="medium">
-            Under Maintenance
+            {t("Dashboard.underMaintenance")}
           </Text>
         </Box>
       </Grid>

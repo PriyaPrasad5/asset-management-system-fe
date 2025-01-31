@@ -136,8 +136,7 @@ const LoginPage = () => {
                   message: t("Login.passwordMinLength"),
                 },
                 validate: (value) =>
-                  /[A-Z]/.test(value) ||
-                 t ("passwordUppercase"),
+                  /[A-Z]/.test(value) || t("passwordUppercase"),
               })}
             />
             <FormErrorMessage>
@@ -166,7 +165,7 @@ const LoginPage = () => {
             </Button>
           </Text>
           <Button onClick={toggleLanguage} colorScheme="blue" mb={4}>
-            {i18n.language === "en" ? "Switch to Hindi" : "अंग्रेज़ी में बदलें"}
+            {i18n.language === "en" ? "हिंदी में बदलें" : "Switch to English"}
           </Button>
         </Stack>
       </Stack>
