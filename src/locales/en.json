@@ -125,5 +125,48 @@
     "errorTitle": "Error loading dashboard",
     "errorDescription": "Failed to fetch asset stats.",
     "errorMessage": "Unable to load dashboard data."
-  }
+  },
+  "Request": {
+    "title": "Create New Request",
+    "assetName": "Asset Name",
+    "requestType": "Request Type",
+    "selectRequestType": "Select request type",
+    "request": "Request",
+    "return": "Return",
+    "createRequest": "Create Request",
+    "successMessage": "Request created successfully!",
+    "errorMessage": "Error creating request",
+    "errors": {
+      "assetNameRequired": "Asset name is required",
+      "assetNameMinLength": "Asset name must be at least 3 characters long",
+      "requestTypeRequired": "Request type is required"
+    }
+  },
+    "RequestList": {
+      "title": "Request List",
+      "name": "Name",
+      "type": "Type",
+      "status": "Status",
+      "reason": "Reason",
+      "assetId": "Asset ID",
+      "action": "Action",
+      "delete": "Delete Request",
+      "deleted": "Request Deleted",
+      "deleteSuccess": "The request has been deleted successfully.",
+      "deleteError": "Error deleting request",
+      "loadError": "Error loading request",
+      "cannotDelete": "Cannot delete",
+      "statuses": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected"
+      },
+      "types": {
+        "request_asset": "Request",
+        "return_asset": "Return"
+      }
+    },
+    "common": {
+      "errorOccurred": "An error occurred"
+    }
 }

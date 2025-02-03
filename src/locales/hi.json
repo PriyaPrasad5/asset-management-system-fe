@@ -126,5 +126,48 @@
     "errorTitle": "डैशबोर्ड लोड करने में त्रुटि",
     "errorDescription": "संपत्ति आँकड़े प्राप्त करने में विफल।",
     "errorMessage": "डैशबोर्ड डेटा लोड करने में असमर्थ।"
-  }
+  },
+  "Request": {
+    "title": "नया अनुरोध बनाएँ",
+    "assetName": "संपत्ति का नाम",
+    "requestType": "अनुरोध प्रकार",
+    "selectRequestType": "अनुरोध प्रकार चुनें",
+    "request": "अनुरोध करें",
+    "return": "वापसी",
+    "createRequest": "अनुरोध बनाएँ",
+    "successMessage": "अनुरोध सफलतापूर्वक बनाया गया!",
+    "errorMessage": "अनुरोध बनाते समय त्रुटि",
+    "errors": {
+      "assetNameRequired": "संपत्ति का नाम आवश्यक है",
+      "assetNameMinLength": "संपत्ति का नाम कम से कम 3 अक्षरों का होना चाहिए",
+      "requestTypeRequired": "अनुरोध प्रकार आवश्यक है"
+    }
+  },
+    "RequestList": {
+      "title": "अनुरोध सूची",
+      "name": "नाम",
+      "type": "प्रकार",
+      "status": "स्थिति",
+      "reason": "कारण",
+      "assetId": "संपत्ति आईडी",
+      "action": "कार्रवाई",
+      "delete": "अनुरोध हटाएं",
+      "deleted": "अनुरोध हटाया गया",
+      "deleteSuccess": "अनुरोध सफलतापूर्वक हटाया गया।",
+      "deleteError": "अनुरोध हटाते समय त्रुटि",
+      "loadError": "अनुरोध लोड करने में त्रुटि",
+      "cannotDelete": "हटाया नहीं जा सकता",
+      "statuses": {
+        "pending": "लंबित",
+        "approved": "मंजूर",
+        "rejected": "अस्वीकृत"
+      },
+      "types": {
+        "request_asset": "अनुरोध",
+        "return_asset": "वापसी"
+      }
+    },
+    "common": {
+      "errorOccurred": "एक त्रुटि हुई"
+    }
 }

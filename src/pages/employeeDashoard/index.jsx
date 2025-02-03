@@ -15,11 +15,13 @@ import {
 } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { deleteRequest, fetchRequest } from "../../services/emplyee";
 
 const RequestEmployeeList = () => {
+  const { t } = useTranslation();
   const toast = useToast();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -36,16 +38,16 @@ const RequestEmployeeList = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(["request"]);
         toast({
-          title: "Request Deleted",
-          description: "The request has been deleted successfully.",
+          title: t("RequestList.deleted"),
+          description: t("RequestList.deleteSuccess"),
           status: "success",
         });
         navigate("/app/employee-dashboard");
       },
       onError: (err) => {
         toast({
-          title: "Error deleting asset",
-          description: err?.message || "An error occurred",
+          title: t("RequestList.deleteError"),
+          description: err?.message || t("common.errorOccurred"),
           status: "error",
         });
       },
@@ -59,7 +61,7 @@ const RequestEmployeeList = () => {
   if (isError) {
     console.error("Error fetching request:", error);
     toast({
-      title: "Error loading request",
+      title: t("RequestList.loadError"),
       description: error.message,
       status: "error",
     });
@@ -78,19 +80,19 @@ const RequestEmployeeList = () => {
   return (
     <Box maxW="none" mx="auto" p={4}>
       <Text fontSize="2xl" fontWeight="bold" mb={4}>
-        Request List
+        {t("RequestList.title")}
       </Text>
       <TableContainer border="1px solid #e2e8f0" borderRadius="md">
         <Table variant="simple">
           <Thead bg="gray.100">
             <Tr>
               <Th>#</Th>
-              <Th>Name</Th>
-              <Th>Type</Th>
-              <Th>Status</Th>
-              <Th>Reason</Th>
-              <Th>Asset ID</Th>
-              <Th>Action</Th>
+              <Th>{t("RequestList.name")}</Th>
+              <Th>{t("RequestList.type")}</Th>
+              <Th>{t("RequestList.status")}</Th>
+              <Th>{t("RequestList.reason")}</Th>
+              <Th>{t("RequestList.assetId")}</Th>
+              <Th>{t("RequestList.action")}</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -99,25 +101,21 @@ const RequestEmployeeList = () => {
                 <Td>{index + 1}</Td>
                 <Td>{request.name}</Td>
                 <Td>
-                  {request.type
-                    .split("_")
-                    .map(
-                      (word) =>
-                        word.charAt(0).toUpperCase() +
-                        word.slice(1).toLowerCase()
-                    )
-                    .join("")}
+                  {t(`RequestList.types.${request.type.toLowerCase()}`, {
+                    defaultValue: request.type,
+                  })}
                 </Td>
                 <Td>
-                  {request.status.charAt(0).toUpperCase() +
-                    request.status.slice(1).toLowerCase()}
+                  {t(`RequestList.statuses.${request.status.toLowerCase()}`, {
+                    defaultValue: request.status,
+                  })}
                 </Td>
                 <Td>{request.reason}</Td>
                 <Td>{request.assetId}</Td>
                 <Td>
                   {request.status === "PENDING" ? (
                     <IconButton
-                      aria-label="Delete Request"
+                      aria-label={t("RequestList.delete")}
                       icon={<FaTrash />}
                       colorScheme="red"
                       size="sm"
@@ -126,7 +124,7 @@ const RequestEmployeeList = () => {
                     />
                   ) : (
                     <Text fontSize="sm" color="gray.500">
-                      Cannot delete
+                      {t("RequestList.cannotDelete")}
                     </Text>
                   )}
                 </Td>
