@@ -28,9 +28,15 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { approveRequest, fetchRequest, rejectRequest } from "../../services/manager";
+import { useTranslation } from "react-i18next";
+import {
+  approveRequest,
+  fetchRequest,
+  rejectRequest,
+} from "../../services/manager";
 
 const RequestList = () => {
+  const { t } = useTranslation();
   const toast = useToast();
   const queryClient = useQueryClient();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -61,8 +67,16 @@ const RequestList = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(["request"]);
       toast({
-        title: `Request ${action === "approve" ? "Approved" : "Rejected"}`,
-        description: `The request has been ${action === "approve" ? "approved" : "rejected"} successfully.`,
+        title: `${t("ManagerRequestList.successMessage")} ${
+          action === "approve"
+            ? t("ManagerRequestList.approve")
+            : t("ManagerRequestList.reject")
+        }`,
+        description: `${t("ManagerRequestList.successMessage")} ${
+          action === "approve"
+            ? t("ManagerRequestList.approve")
+            : t("ManagerRequestList.reject")
+        } ${t("ManagerRequestList.successMessage")}`,
         status: "success",
       });
       reset();
@@ -70,7 +84,11 @@ const RequestList = () => {
     },
     onError: (err) => {
       toast({
-        title: `Error ${action === "approve" ? "approving" : "rejecting"} request`,
+        title: `${t("ManagerRequestList.error")} ${
+          action === "approve"
+            ? t("ManagerRequestList.approve")
+            : t("ManagerRequestList.reject")
+        }`,
         description: err?.message || "An error occurred",
         status: "error",
       });
@@ -81,8 +99,8 @@ const RequestList = () => {
   const onSubmit = (data) => {
     if (action === "approve" && (!data.assetId || !data.reason)) {
       toast({
-        title: "Error",
-        description: "Both Asset ID and Reason are required for approval.",
+        title: t("ManagerRequestList.error"),
+        description: t("ManagerRequestList.assetIdRequired"),
         status: "error",
       });
       return;
@@ -90,8 +108,8 @@ const RequestList = () => {
 
     if (action === "reject" && !data.reason) {
       toast({
-        title: "Error",
-        description: "Reason is required for rejection.",
+        title: t("ManagerRequestList.error"),
+        description: t("ManagerRequestList.reasonRequired"),
         status: "error",
       });
       return;
@@ -119,7 +137,7 @@ const RequestList = () => {
   if (isError) {
     console.error("Error fetching request:", error);
     toast({
-      title: "Error loading requests",
+      title: t("ManagerRequestList.error"),
       description: error.message,
       status: "error",
     });
@@ -139,20 +157,20 @@ const RequestList = () => {
   return (
     <Box maxW="none" mx="auto" p={4}>
       <Text fontSize="2xl" fontWeight="bold" mb={4}>
-        Request List
+        {t("ManagerRequestList.requestList")}
       </Text>
       <TableContainer border="1px solid #e2e8f0" borderRadius="md">
         <Table variant="simple">
           <Thead bg="gray.100">
             <Tr>
               <Th>#</Th>
-              <Th>Name</Th>
-              <Th>Type</Th>
-              <Th>Status</Th>
-              <Th>Reason</Th>
-              <Th>Asset ID</Th>
-              <Th>User ID</Th>
-              <Th>Action</Th>
+              <Th>{t("ManagerRequestList.name")}</Th>
+              <Th>{t("ManagerRequestList.type")}</Th>
+              <Th>{t("ManagerRequestList.status")}</Th>
+              <Th>{t("ManagerRequestList.reason")}</Th>
+              <Th>{t("ManagerRequestList.assetId")}</Th>
+              <Th>{t("ManagerRequestList.userId")}</Th>
+              <Th>{t("ManagerRequestList.action")}</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -186,19 +204,19 @@ const RequestList = () => {
                         mr={2}
                         onClick={() => openModal(request, "approve")}
                       >
-                        Approve
+                        {t("ManagerRequestList.approve")}
                       </Button>
                       <Button
                         size="sm"
                         colorScheme="red"
                         onClick={() => openModal(request, "reject")}
                       >
-                        Reject
+                        {t("ManagerRequestList.reject")}
                       </Button>
                     </>
                   ) : (
                     <Text fontSize="sm" color="gray.500">
-                      Cannot modify
+                      {t("ManagerRequestList.cannotModify")}
                     </Text>
                   )}
                 </Td>
@@ -221,35 +239,42 @@ const RequestList = () => {
               {action === "approve" && (
                 <>
                   <FormControl isInvalid={errors.assetId}>
-                    <FormLabel>Asset Id</FormLabel>
+                    <FormLabel>{t("ManagerRequestList.assetId")}</FormLabel>
                     <Input
                       {...register("assetId", {
-                        required: "Asset ID is required",
+                        required: t("ManagerRequestList.assetIdRequired"),
                       })}
-                      placeholder="Enter approval asset ID"
                     />
-                    <FormErrorMessage>{errors.assetId?.message}</FormErrorMessage>
+                    <FormErrorMessage>
+                      {errors.assetId?.message}
+                    </FormErrorMessage>
                   </FormControl>
                   <FormControl mt={4} isInvalid={errors.reason}>
-                    <FormLabel>Approval Comment</FormLabel>
+                    <FormLabel>
+                      {t("ManagerRequestList.approvalComment")}
+                    </FormLabel>
                     <Input
                       {...register("reason", {
-                        required: "Approval reason is required",
+                        required: t(
+                          "ManagerRequestList.approvalReasonRequired"
+                        ),
                       })}
-                      placeholder="Enter approval reason"
                     />
-                    <FormErrorMessage>{errors.reason?.message}</FormErrorMessage>
+                    <FormErrorMessage>
+                      {errors.reason?.message}
+                    </FormErrorMessage>
                   </FormControl>
                 </>
               )}
               {action === "reject" && (
                 <FormControl isInvalid={errors.reason}>
-                  <FormLabel>Rejection Reason</FormLabel>
+                  <FormLabel>
+                    {t("ManagerRequestList.rejectionReason")}
+                  </FormLabel>
                   <Input
                     {...register("reason", {
-                      required: "Reason is required",
+                      required: t("ManagerRequestList.reasonRequired"),
                     })}
-                    placeholder="Enter rejection reason"
                   />
                   <FormErrorMessage>{errors.reason?.message}</FormErrorMessage>
                 </FormControl>
@@ -263,10 +288,10 @@ const RequestList = () => {
               isLoading={actionLoading}
               onClick={handleSubmit(onSubmit)}
             >
-              Submit
+              {t("common.submit")}
             </Button>
             <Button variant="ghost" onClick={onCloseModal}>
-              Cancel
+              {t("common.cancel")}
             </Button>
           </ModalFooter>
         </ModalContent>

@@ -29,7 +29,7 @@ const Dashboard = () => {
   if (isLoading) {
     return (
       <Center minH="100vh">
-        <Spinner size="xl" />
+        <Spinner size="xl" aria-busy="true" data-testid="loading-spinner"/>
       </Center>
     );
   }

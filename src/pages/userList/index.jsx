@@ -82,6 +82,7 @@ const UserList = () => {
                     size="sm"
                     colorScheme="blue"
                     onClick={() => handleViewDetails(user.id)}
+                    data-testid={`view-button-${user.id}`}
                   >
                     {t("UserList.view")}
                   </Button>

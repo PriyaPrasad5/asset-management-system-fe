@@ -143,31 +143,72 @@
       "requestTypeRequired": "अनुरोध प्रकार आवश्यक है"
     }
   },
-    "RequestList": {
-      "title": "अनुरोध सूची",
-      "name": "नाम",
-      "type": "प्रकार",
-      "status": "स्थिति",
-      "reason": "कारण",
-      "assetId": "संपत्ति आईडी",
-      "action": "कार्रवाई",
-      "delete": "अनुरोध हटाएं",
-      "deleted": "अनुरोध हटाया गया",
-      "deleteSuccess": "अनुरोध सफलतापूर्वक हटाया गया।",
-      "deleteError": "अनुरोध हटाते समय त्रुटि",
-      "loadError": "अनुरोध लोड करने में त्रुटि",
-      "cannotDelete": "हटाया नहीं जा सकता",
-      "statuses": {
-        "pending": "लंबित",
-        "approved": "मंजूर",
-        "rejected": "अस्वीकृत"
-      },
-      "types": {
-        "request_asset": "अनुरोध",
-        "return_asset": "वापसी"
-      }
+  "RequestList": {
+    "title": "अनुरोध सूची",
+    "name": "नाम",
+    "type": "प्रकार",
+    "status": "स्थिति",
+    "reason": "कारण",
+    "assetId": "संपत्ति आईडी",
+    "action": "कार्रवाई",
+    "delete": "अनुरोध हटाएं",
+    "deleted": "अनुरोध हटाया गया",
+    "deleteSuccess": "अनुरोध सफलतापूर्वक हटाया गया।",
+    "deleteError": "अनुरोध हटाते समय त्रुटि",
+    "loadError": "अनुरोध लोड करने में त्रुटि",
+    "cannotDelete": "हटाया नहीं जा सकता",
+    "statuses": {
+      "pending": "लंबित",
+      "approved": "मंजूर",
+      "rejected": "अस्वीकृत"
     },
-    "common": {
-      "errorOccurred": "एक त्रुटि हुई"
+    "types": {
+      "request_asset": "अनुरोध",
+      "return_asset": "वापसी"
     }
+  },
+  "common": {
+    "errorOccurred": "एक त्रुटि हुई",
+    "submit": "सबमिट करें",
+    "cancel": "रद्द करें"
+  },
+  "ManagerAssetList": {
+    "assetList": "संपत्ति सूची",
+    "searchByWarrantyDate": "वारंटी तारीख से खोजें",
+    "validationError": "सत्यापन त्रुटि",
+    "pleaseEnterValidDate": "कृपया एक मान्य तारीख दर्ज करें।",
+    "errorSearchingAssets": "संपत्तियों की खोज में त्रुटि",
+    "errorLoadingAssets": "संपत्तियों को लोड करते समय त्रुटि",
+    "assetId": "संपत्ति आईडी",
+    "assetIdentifier": "संपत्ति पहचानकर्ता",
+    "assetName": "नाम",
+    "assetType": "प्रकार",
+    "assetStatus": "स्थिति",
+    "purchaseDate": "खरीद तारीख",
+    "warrantyEndDate": "वारंटी समाप्ति तिथि",
+    "userId": "उपयोगकर्ता आईडी",
+    "searchButton": "खोजें"
+  },
+  "ManagerRequestList": {
+    "requestList": "अनुरोध सूची",
+    "approve": "मंज़ूर करें",
+    "reject": "अस्वीकृत करें",
+    "cannotModify": "संशोधित नहीं कर सकते",
+    "approveRequest": "अनुरोध स्वीकृत करें",
+    "rejectRequest": "अनुरोध अस्वीकृत करें",
+    "assetId": "संपत्ति आईडी",
+    "approvalComment": "मंजूरी टिप्पणी",
+    "rejectionReason": "अस्वीकृति कारण",
+    "error": "त्रुटि",
+    "reasonRequired": "अस्वीकृति के लिए कारण आवश्यक है",
+    "approvalReasonRequired": "मंजूरी कारण आवश्यक है",
+    "assetIdRequired": "मंजूरी के लिए संपत्ति आईडी आवश्यक है",
+    "successMessage": "अनुरोध को सफलतापूर्वक",
+    "name": "नाम",
+    "type": "प्रकार",
+    "status": "स्थिति",
+    "reason": "कारण",
+    "userId": "उपयोगकर्ता आईडी",
+    "action": "क्रिया"
+  }
 }

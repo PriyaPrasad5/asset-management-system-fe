@@ -17,9 +17,11 @@ import {
 } from "@chakra-ui/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { fetchAssets, filter } from "../../services/manager";
 
 const ManagerAssetList = () => {
+  const { t } = useTranslation();
   const toast = useToast();
   const queryClient = useQueryClient();
   const [searchDate, setSearchDate] = useState("");
@@ -34,8 +36,8 @@ const ManagerAssetList = () => {
   const handleSearch = async () => {
     if (!searchDate) {
       toast({
-        title: "Validation Error",
-        description: "Please enter a valid date.",
+        title: t("ManagerAssetList.validationError"),
+        description: t("ManagerAssetList.pleaseEnterValidDate"),
         status: "error",
       });
       return;
@@ -46,8 +48,8 @@ const ManagerAssetList = () => {
       queryClient.setQueryData(["assets"], { data: response.data });
     } catch (err) {
       toast({
-        title: "Error searching assets",
-        description: err?.message || "An error occurred while searching",
+        title: t("ManagerAssetList.errorSearchingAssets"),
+        description: err?.message || t("ManagerAssetList.errorLoadingAssets"),
         status: "error",
       });
     }
@@ -56,11 +58,9 @@ const ManagerAssetList = () => {
   if (isError) {
     console.error("Error fetching assets:", error);
     toast({
-      title: "Error loading assets",
+      title: t("ManagerAssetList.errorLoadingAssets"),
       description: error.message,
       status: "error",
-      // duration: 5000,
-      // isClosable: true,
     });
   }
 
@@ -77,7 +77,7 @@ const ManagerAssetList = () => {
   return (
     <Box maxW="none" mx="auto" p={4}>
       <Text fontSize="2xl" fontWeight="bold" mb={4}>
-        Asset List
+        {t("ManagerAssetList.assetList")}
       </Text>
       {/* Search Input */}
       <Box mb={4} display="flex" alignItems="center">
@@ -85,11 +85,11 @@ const ManagerAssetList = () => {
           type="date"
           value={searchDate}
           onChange={(e) => setSearchDate(e.target.value)}
-          placeholder="Search by Warranty Date"
+          placeholder={t("ManagerAssetList.searchByWarrantyDate")}
           mr={2}
         />
         <Button colorScheme="blue" onClick={handleSearch}>
-          Search
+          {t("ManagerAssetList.searchButton")}
         </Button>
       </Box>
       <TableContainer border="1px solid #e2e8f0" borderRadius="md">
@@ -97,14 +97,14 @@ const ManagerAssetList = () => {
           <Thead bg="gray.100">
             <Tr>
               <Th>#</Th>
-              <Th>Asset ID</Th>
-              <Th>Asset Identifier</Th>
-              <Th>Name</Th>
-              <Th>Type</Th>
-              <Th>Status</Th>
-              <Th>Purchase Date</Th>
-              <Th>Warranty End Date</Th>
-              <Th>UserId</Th>
+              <Th>{t("ManagerAssetList.assetId")}</Th>
+              <Th>{t("ManagerAssetList.assetIdentifier")}</Th>
+              <Th>{t("ManagerAssetList.assetName")}</Th>
+              <Th>{t("ManagerAssetList.assetType")}</Th>
+              <Th>{t("ManagerAssetList.assetStatus")}</Th>
+              <Th>{t("ManagerAssetList.purchaseDate")}</Th>
+              <Th>{t("ManagerAssetList.warrantyEndDate")}</Th>
+              <Th>{t("ManagerAssetList.userId")}</Th>
             </Tr>
           </Thead>
           <Tbody>

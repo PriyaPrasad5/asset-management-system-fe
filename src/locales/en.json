@@ -142,31 +142,72 @@
       "requestTypeRequired": "Request type is required"
     }
   },
-    "RequestList": {
-      "title": "Request List",
-      "name": "Name",
-      "type": "Type",
-      "status": "Status",
-      "reason": "Reason",
-      "assetId": "Asset ID",
-      "action": "Action",
-      "delete": "Delete Request",
-      "deleted": "Request Deleted",
-      "deleteSuccess": "The request has been deleted successfully.",
-      "deleteError": "Error deleting request",
-      "loadError": "Error loading request",
-      "cannotDelete": "Cannot delete",
-      "statuses": {
-        "pending": "Pending",
-        "approved": "Approved",
-        "rejected": "Rejected"
-      },
-      "types": {
-        "request_asset": "Request",
-        "return_asset": "Return"
-      }
+  "RequestList": {
+    "title": "Request List",
+    "name": "Name",
+    "type": "Type",
+    "status": "Status",
+    "reason": "Reason",
+    "assetId": "Asset ID",
+    "action": "Action",
+    "delete": "Delete Request",
+    "deleted": "Request Deleted",
+    "deleteSuccess": "The request has been deleted successfully.",
+    "deleteError": "Error deleting request",
+    "loadError": "Error loading request",
+    "cannotDelete": "Cannot delete",
+    "statuses": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
     },
-    "common": {
-      "errorOccurred": "An error occurred"
+    "types": {
+      "request_asset": "Request",
+      "return_asset": "Return"
     }
+  },
+  "common": {
+    "errorOccurred": "An error occurred",
+    "submit": "Submit",
+    "cancel": "Cancel"
+  },
+  "ManagerAssetList": {
+    "assetList": "Asset List",
+    "searchByWarrantyDate": "Search by Warranty Date",
+    "validationError": "Validation Error",
+    "pleaseEnterValidDate": "Please enter a valid date.",
+    "errorSearchingAssets": "Error searching assets",
+    "errorLoadingAssets": "Error loading assets",
+    "assetId": "Asset ID",
+    "assetIdentifier": "Asset Identifier",
+    "assetName": "Name",
+    "assetType": "Type",
+    "assetStatus": "Status",
+    "purchaseDate": "Purchase Date",
+    "warrantyEndDate": "Warranty End Date",
+    "userId": "UserId",
+    "searchButton": "Search"
+  },
+  "ManagerRequestList": {
+    "requestList": "Request List",
+    "approve": "Approve",
+    "reject": "Reject",
+    "cannotModify": "Cannot modify",
+    "approveRequest": "Approve Request",
+    "rejectRequest": "Reject Request",
+    "assetId": "Asset ID",
+    "approvalComment": "Approval Comment",
+    "rejectionReason": "Rejection Reason",
+    "error": "Error",
+    "reasonRequired": "Reason is required for rejection.",
+    "approvalReasonRequired": "Approval reason is required",
+    "assetIdRequired": "Asset ID is required for approval.",
+    "successMessage": "Request has been successfully",
+    "name": "Name",
+    "type": "Type",
+    "status": "Status",
+    "reason": "Reason",
+    "userId": "User ID",
+    "action": "Action"
+  }
 }
